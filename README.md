@@ -63,6 +63,30 @@ plainly that it cannot vouch for the other Rs 5,976.
 Usage access is also demoted to an optional, skippable, second permission with
 its limits stated on the screen. The app works without it.
 
+## Worth it? Per-use comparison
+
+Kitna already reads every debit, not only the recurring ones. v2 spends that on
+the job it already has rather than on a general expense ledger.
+
+For each subscription it compares what you pay against what you actually
+consumed, and ends in a decision rather than a chart:
+
+| Verdict | Example | Basis |
+|---|---|---|
+| Cancel | Cult.fit, Rs 3,750 paid over 90 days, 0 visits | A day pass is Rs 350. You would have paid Rs 0. |
+| Downgrade | Netflix Premium, four screens, never more than one in use | Standard is Rs 499 and covers what you used |
+| Ask me | JioHotstar, no opens on this phone | Might be a TV. Only you know. |
+| Earning its keep | Swiggy One, 34 orders, Rs 1,530 of delivery waived for Rs 447 | Ahead by Rs 361 a month |
+
+The flow is a triage: one card at a time, the arithmetic laid out, two buttons,
+a running total of what you have recovered, and a before/after on the run rate
+at the end. Rs 19,968 a year is backed by numbers; Rs 3,588 needs a word from
+you.
+
+This deliberately is **not** an expense tracker. No categories, no budgets, no
+monthly report, nothing for the user to maintain. That category is a commodity
+in India and it is what killed Walnut.
+
 ## Files
 
 | File | Purpose |

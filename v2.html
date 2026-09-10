@@ -168,6 +168,45 @@ button{font-family:inherit}
 .tier.luxe{color:var(--luxe)}
 .tier.err{color:var(--err)}
 
+/* worth-it flow */
+.wrow{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;
+  grid-template-columns:40px minmax(0,1fr) auto;gap:.8rem;align-items:center;
+  padding:13px 0;border-bottom:1px solid var(--hairline)}
+.wrow:last-child{border-bottom:0}
+.wrow:focus-visible{box-shadow:0 0 0 2px var(--ink);border-radius:8px}
+.wrow .nm{font-size:.9375rem;font-weight:600;line-height:1.25;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+.wrow .sub{font-size:.8125rem;font-weight:500;color:var(--ash);line-height:1.3;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wrow .amt{font-size:.9375rem;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.wrow .amt.cut{color:var(--plus)}
+.wrow .amt.ok{color:var(--ash);font-weight:500}
+
+.tcard{border:1px solid var(--hairline);border-radius:20px;padding:20px;
+  display:flex;flex-direction:column;gap:1rem;box-shadow:var(--e2)}
+.tcard .who{display:flex;align-items:center;gap:.85rem}
+.tcard .who .nm{font-size:1.0625rem;font-weight:700;line-height:1.2}
+.tcard .who .pr{font-size:.875rem;font-weight:500;color:var(--ash);margin-top:2px}
+.tcard .head{font-size:1.375rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.tcard .alt{font-size:.875rem;font-weight:500;color:var(--ash);line-height:1.5;
+  padding-top:.9rem;border-top:1px solid var(--hairline)}
+.tcard .save{display:flex;align-items:baseline;gap:.4rem;font-variant-numeric:tabular-nums}
+.tcard .save .n{font-size:1.5rem;font-weight:700;color:var(--plus);letter-spacing:-.02em}
+.tcard .save .l{font-size:.8125rem;font-weight:500;color:var(--ash)}
+
+.prog{display:flex;align-items:center;gap:.6rem}
+.prog .track{flex:1;height:4px;background:#ebebeb;border-radius:2px;overflow:hidden}
+.prog .track i{display:block;height:100%;background:var(--ink);border-radius:2px}
+.prog .n{font-size:.75rem;font-weight:600;color:var(--ash);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+.ba{display:grid;grid-template-columns:1fr auto 1fr;gap:.75rem;align-items:center;
+  border:1px solid var(--hairline);border-radius:16px;padding:16px}
+.ba .c{text-align:center}
+.ba .k{font-size:.6875rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  font-feature-settings:"salt";color:var(--ash)}
+.ba .v{font-size:1.25rem;font-weight:700;font-variant-numeric:tabular-nums;margin-top:.25rem;letter-spacing:-.02em}
+.ba .v.old{color:var(--ash);text-decoration:line-through;font-weight:500}
+
 /* solid grounds — one confident block per screen, never two */
 .artbox{border-radius:20px;display:grid;place-items:center;padding:1.1rem 0;margin-top:.25rem}
 .artbox.cloud{background:var(--cloud)}
@@ -568,6 +607,54 @@ var TRENDS = {
   none:{ m:[], v:[] }
 };
 var RAMP = ["#222222","#3f3f3f","#6a6a6a","#929292","#c1c1c1","#dddddd"];
+/* Per-use comparison. Every figure below is derived from transactions Kitna
+   already reads: the mandate debits plus the variable spend at the same
+   merchant. No new permission, no ledger for the user to maintain.        */
+var WORTH = [
+  { k:"cult", v:"cancel", head:"Losing ₹1,250 every month",
+    rows:[["Paid, last 90 days","₹3,750"],["Visits","0"],["Cost per visit","no visits to divide by"]],
+    alt:"Cult.fit day pass is ₹350. At your rate you would have paid ₹0.",
+    save:15000, act:"Cancel it" },
+
+  { k:"audible", v:"cancel", head:"Three credits, none spent",
+    rows:[["Paid, last 90 days","₹597"],["Books started","0"],["Unused credits","3"]],
+    alt:"Buying the one book you wanted costs about ₹400, once.",
+    save:2388, act:"Cancel it" },
+
+  { k:"netflix", v:"downgrade", head:"Paying for four screens, using one",
+    rows:[["Plan","Premium · 4 screens, 4K"],["Most screens at once","1"],["Opens last month","4, was 19"]],
+    alt:"Standard is ₹499 and covers everything you actually used.",
+    save:1800, act:"Downgrade" },
+
+  { k:"gone", v:"downgrade", head:"Paying for storage you are a fifth into",
+    rows:[["Paid, last 90 days","₹390"],["Storage used","41 GB of 200 GB"],["Growth","1.2 GB a month"]],
+    alt:"The smaller plan is ₹65 and you would not reach it for four years.",
+    save:780, act:"Downgrade" },
+
+  { k:"hotstar", v:"ask", head:"Kitna cannot judge this one",
+    rows:[["Paid, last 90 days","₹897"],["Opens on this phone","0"],["Other devices","invisible to Kitna"]],
+    alt:"If you watch on a TV this is fine. Only you know.",
+    save:3588, act:"I watch it elsewhere" },
+
+  { k:"swiggy", v:"keep", head:"Earning ₹361 a month",
+    rows:[["Paid, last 90 days","₹447"],["Orders","34"],["Delivery fees waived","₹1,530"]],
+    alt:"Without One those 34 orders would have cost ₹1,530 more.",
+    save:0, act:"Keep" },
+
+  { k:"prime", v:"keep", head:"Just about worth it",
+    rows:[["Paid, last 90 days","₹375"],["Orders","11"],["Delivery fees waived","₹440"]],
+    alt:"Ahead by ₹65 over 90 days. Thin, but ahead.",
+    save:0, act:"Keep" },
+
+  { k:"chatgpt", v:"keep", head:"Used almost daily",
+    rows:[["Paid, last 90 days","₹5,997"],["Days opened","22 of the last 30"],["Cost per day used","₹91"]],
+    alt:"Nothing to change here.",
+    save:0, act:"Keep" }
+];
+var VLABEL = { cancel:"Cancel", downgrade:"Downgrade", ask:"Ask me", keep:"Earning its keep" };
+var TI = 0;            // triage position
+var DECIDED = {};      // k -> action taken
+
 var STATE = "full";
 var USAGE = true;      // has the user granted optional usage access?
 var MUTED = {};        // subscriptions the user said they use elsewhere
@@ -598,6 +685,15 @@ function verdict(s){
   return s.obs === "direct" ? (USAGE ? "confirmed" : "unknown") : "unknown";
 }
 function byVerdict(v){ return leaks().filter(function(s){ return verdict(s) === v; }); }
+function worthList(){ return WORTH.filter(function(w){ return SETS[STATE].indexOf(w.k) >= 0; }); }
+function toDecide(){ return worthList().filter(function(w){ return w.v !== "keep"; }); }
+function recoverable(){ return toDecide().filter(function(w){ return w.v !== "ask"; })
+  .reduce(function(t,w){ return t + w.save; }, 0); }
+function unjudgeable(){ return toDecide().filter(function(w){ return w.v === "ask"; })
+  .reduce(function(t,w){ return t + w.save; }, 0); }
+function recovered(){ return Object.keys(DECIDED).reduce(function(t,k){
+  var w = WORTH.filter(function(x){ return x.k === k; })[0];
+  return t + (DECIDED[k] === "kept" ? 0 : (w ? w.save : 0)); }, 0); }
 function evidenceLabel(s){
   if (s.ev === "app")   return "Opened on this phone " + (s.idle <= 1 ? "today" : s.idle + " days ago");
   if (s.ev === "notif") return "Order confirmed " + s.idle + " days ago, seen in notifications";
@@ -909,6 +1005,13 @@ S.home = function(){
      + '<button class="btn outline" data-go="usage">Turn on usage checking</button>';
   }
 
+  body += '<button class="wrow" data-go="worth" style="border:1px solid var(--hairline);'
+   + 'border-radius:14px;padding:14px 16px;grid-template-columns:auto 1fr auto">'
+   + ic("i-chart")
+   + '<span><span class="nm">Worth it?</span>'
+   + '<span class="sub">'+rs(recoverable())+' a year, checked against what you actually used</span></span>'
+   + ic("i-next","sm") + '</button>';
+
   if (CONF.length){
     body += '<div class="col g16">' + shead("Not opened on this phone", rs(monthly(CONF))+" / mo")
       + '<p class="t13" style="margin-top:-.4rem">You open these to use them, so silence here is real.</p>'
@@ -1028,6 +1131,94 @@ S.dead = function(){
    +   '<span class="v">revoked 14 Aug</span></div></div></div>';
 
   return '<div class="screen">' + statusbar() + plainbar("Review") + '<div class="body">'+body+'</div>' + tabbar("dead") + '</div>';
+};
+
+/* ── worth it: the per-use verdict list ── */
+S.worth = function(){
+  var W = worthList(), groups = ["cancel","downgrade","ask","keep"];
+  var body = '<div class="pad col g24" style="padding-top:.25rem;padding-bottom:1.5rem">'
+   + '<div class="solid ink">'
+   +   '<span class="k">Recoverable a year</span>'
+   +   '<div class="big">'+rs(recoverable())+'</div>'
+   +   '<div class="sub">From '+toDecide().filter(function(w){return w.v!=="ask";}).length
+   +     ' decisions Kitna can back with numbers. Another '+rs(unjudgeable())+' needs a word from you.</div>'
+   + '</div>'
+   + '<p class="t13">Worked out from what you already pay against what you actually used, using the same transactions Kitna reads for mandates. Nothing new was collected.</p>';
+
+  groups.forEach(function(g){
+    var rows = W.filter(function(w){ return w.v === g; });
+    if (!rows.length) return;
+    body += '<div class="col g8">' + shead(VLABEL[g], rows.length + (g==="keep"?" of them":" · "+rs(rows.reduce(function(t,w){return t+w.save;},0))+" / yr"))
+     + '<div>' + rows.map(function(w){
+        var s2 = SUBS[w.k];
+        return '<button class="wrow" data-go="triage">' + tile(s2,"sm")
+         + '<span><span class="nm">'+s2.n+'</span><span class="sub">'+w.head+'</span></span>'
+         + '<span class="amt '+(w.save?"cut":"ok")+'">'+(w.save?rs(w.save)+"/yr":"keep")+'</span></button>';
+       }).join("") + '</div></div>';
+  });
+
+  body += '<button class="btn" data-go="triage">Start deciding</button></div>';
+  return '<div class="screen">' + statusbar() + plainbar("Worth it?", {back:"home"})
+   + '<div class="body">'+body+'</div></div>';
+};
+
+/* ── triage: one decision at a time ── */
+S.triage = function(){
+  var Q = toDecide();
+  if (TI >= Q.length) return S.worthdone();
+  var w = Q[TI], s2 = SUBS[w.k];
+  var pct = Math.round(TI / Q.length * 100);
+
+  var acts = w.v === "ask"
+    ? '<button class="btn outline" data-decide="'+w.k+':kept">I watch it elsewhere, keep it</button>'
+      + '<button class="btn" data-decide="'+w.k+':cut">I do not use it, cancel</button>'
+    : '<button class="btn" data-decide="'+w.k+':cut">'+w.act+', save '+rs(w.save)+' a year</button>'
+      + '<button class="btn outline" data-decide="'+w.k+':kept">Keep it as it is</button>';
+
+  return '<div class="screen">' + statusbar() + plainbar("", {back:"worth"})
+   + '<div class="body"><div class="pad col g16" style="padding-top:.25rem">'
+   + '<div class="prog"><span class="n">'+(TI+1)+' of '+Q.length+'</span>'
+   +   '<span class="track"><i style="width:'+pct+'%"></i></span>'
+   +   '<span class="n">'+rs(recovered())+' so far</span></div>'
+   + '<div class="tcard">'
+   +   '<div class="who">'+tile(s2)
+   +     '<div><div class="nm">'+s2.n+'</div><div class="pr">'+rs(s2.a)+' '+cyc(s2)+'</div></div></div>'
+   +   '<div class="head">'+w.head+'</div>'
+   +   '<div>' + w.rows.map(function(r){
+         return '<div class="arow"><span></span><span class="l">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>';
+       }).join("") + '</div>'
+   +   '<div class="alt">'+w.alt+'</div>'
+   +   (w.save ? '<div class="save"><span class="n">'+rs(w.save)+'</span><span class="l">a year if you act</span></div>' : '')
+   + '</div>'
+   + '</div></div>'
+   + '<div class="acts">'+acts+'</div></div>';
+};
+
+/* ── the result ── */
+S.worthdone = function(){
+  var cut = recovered(), before = yearly(leaks()), after = before - cut;
+  var rows = Object.keys(DECIDED).map(function(k){
+    var w = WORTH.filter(function(x){ return x.k === k; })[0], s2 = SUBS[k];
+    return '<div class="wrow" style="cursor:default">' + tile(s2,"sm")
+     + '<span><span class="nm">'+s2.n+'</span><span class="sub">'
+     +   (DECIDED[k]==="kept" ? "Kept" : w.act) + '</span></span>'
+     + '<span class="amt '+(DECIDED[k]==="kept"?"ok":"cut")+'">'
+     +   (DECIDED[k]==="kept" ? "no change" : "−"+rs(w.save)) + '</span></div>';
+  }).join("");
+
+  return '<div class="screen">' + statusbar() + plainbar("", {back:"home"})
+   + '<div class="body"><div class="pad col g24" style="padding-top:.25rem;padding-bottom:1.5rem">'
+   + '<div class="solid ink"><span class="k">Cut from the run rate</span>'
+   +   '<div class="big">'+rs(cut)+'</div>'
+   +   '<div class="sub">A year. Every one of these was decided on numbers you can check.</div></div>'
+   + '<div class="ba"><div class="c"><div class="k">Was</div><div class="v old">'+rs(before)+'</div></div>'
+   +   '<span>'+ic("i-next","sm")+'</span>'
+   +   '<div class="c"><div class="k">Now</div><div class="v">'+rs(after)+'</div></div></div>'
+   + (rows ? '<div class="col g8">' + shead("What you decided") + '<div>'+rows+'</div></div>' : '')
+   + '<p class="t13">Kitna cannot cancel anything for you. Each of these opens the merchant or your UPI app, and Kitna watches for the debit to stop.</p>'
+   + '<button class="btn" data-go="home:full:on">Back to home</button>'
+   + '<button class="btn outline" data-restart>Run it again</button>'
+   + '</div></div></div>';
 };
 
 /* ── optional usage access ── */
@@ -1260,13 +1451,18 @@ var VIEWS = [
     ["dead:few:on","18","Clean","Nothing to question"],
     ["checkin","19","Monthly ask","NEW · one tap settles what it cannot see"]
   ]],
+  ["Worth it · per-use", [
+    ["worth","20","Verdict list","NEW · cancel, downgrade, ask, earning its keep"],
+    ["triage","21","Decide, one at a time","NEW · the math, then two buttons"],
+    ["worthdone","22","Result","NEW · run rate before and after"]
+  ]],
   ["Detail & input", [
-    ["detail","20","Mandate detail","NEW · evidence ledger, not a flat claim"],
-    ["add","21","Add manually","Chips and a switch"]
+    ["detail","23","Mandate detail","Evidence ledger, not a flat claim"],
+    ["add","24","Add manually","Chips and a switch"]
   ]],
   ["Settings", [
-    ["settings","22","Settings","Initial avatar, amenity-style rows"],
-    ["notif","23","Notifications","Toggles and chips, all live"]
+    ["settings","25","Settings","Initial avatar, amenity-style rows"],
+    ["notif","26","Notifications","Toggles and chips, all live"]
   ]]
 ];
 
@@ -1289,6 +1485,7 @@ function show(target){
   var p = String(target).split(":"), key = p[0];
   if (p[1]) STATE = p[1];
   if (p[2]) USAGE = (p[2] === "on");
+  if (key === "worth"){ TI = 0; DECIDED = {}; }
   if (!S[key]) return;
   device.innerHTML = S[key]();
   picker.querySelectorAll(".pk").forEach(function(b){
@@ -1309,6 +1506,15 @@ document.addEventListener("click", function(e){
   if (dh){ dh.parentNode.classList.toggle("open"); return; }
   var mb = e.target.closest("[data-more]");
   if (mb){ mb.parentNode.classList.toggle("open"); return; }
+  var dec = e.target.closest("[data-decide]");
+  if (dec){
+    var parts = dec.getAttribute("data-decide").split(":");
+    DECIDED[parts[0]] = parts[1];
+    TI++;
+    show("triage");
+    return;
+  }
+  if (e.target.closest("[data-restart]")){ TI = 0; DECIDED = {}; show("worth"); return; }
   var mu = e.target.closest("[data-mute]");
   if (mu){
     MUTED[mu.getAttribute("data-mute")] = true;
