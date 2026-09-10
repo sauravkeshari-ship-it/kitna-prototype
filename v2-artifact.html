@@ -163,6 +163,28 @@ button{font-family:inherit}
 .tier.luxe{color:var(--luxe)}
 .tier.err{color:var(--err)}
 
+/* solid grounds — one confident block per screen, never two */
+.artbox{border-radius:20px;display:grid;place-items:center;padding:1.1rem 0;margin-top:.25rem}
+.artbox.cloud{background:var(--cloud)}
+.artbox.rausch{background:var(--rausch)}
+.artbox.luxe{background:var(--luxe)}
+.artbox.rausch svg [stroke="#222222"], .artbox.luxe svg [stroke="#222222"],
+.artbox.rausch svg [stroke="#ff385c"], .artbox.luxe svg [stroke="#ff385c"]{stroke:#fff}
+.artbox.rausch svg [stroke="#dddddd"], .artbox.luxe svg [stroke="#dddddd"]{stroke:rgba(255,255,255,.55)}
+.artbox.rausch svg [fill="#f7f7f7"], .artbox.luxe svg [fill="#f7f7f7"]{fill:rgba(255,255,255,.3)}
+.artbox.rausch svg text, .artbox.luxe svg text{fill:#fff}
+
+.solid{border-radius:20px;padding:20px;color:#fff}
+.solid.ink{background:var(--ink)}
+.solid.plus{background:var(--plus)}
+.solid .k{font-size:.6875rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  font-feature-settings:"salt";color:rgba(255,255,255,.72)}
+.solid .big{font-size:2.5rem;font-weight:700;letter-spacing:-.03em;line-height:1.05;
+  font-variant-numeric:tabular-nums;margin-top:.35rem}
+.solid .sub{font-size:.875rem;font-weight:500;line-height:1.45;color:rgba(255,255,255,.82);margin-top:.5rem}
+.solid .tile{border-color:rgba(255,255,255,.28);background:rgba(255,255,255,.1)}
+.solid .tilestack .tile{box-shadow:0 0 0 3px var(--ink)}
+
 /* small line art */
 .art{display:grid;place-items:center;padding:.75rem 0}
 .art svg{width:210px;height:140px}
@@ -221,7 +243,7 @@ button{font-family:inherit}
 /* verdict chips + evidence */
 .vchip{display:inline-flex;align-items:center;gap:.3rem;font-size:.6875rem;font-weight:600;
   font-feature-settings:"salt";padding:3px 8px;border-radius:20px;border:1px solid;white-space:nowrap}
-.vchip.confirmed{color:var(--plus);border-color:#d9b6c6}
+.vchip.confirmed{color:#fff;background:var(--plus);border-color:var(--plus)}
 .vchip.unknown{color:var(--ash);border-color:var(--hairline)}
 .vchip.unseeable{color:var(--luxe);border-color:#c9b8dc}
 .evid{display:grid;grid-template-columns:18px 1fr;gap:.6rem;align-items:start;
@@ -702,18 +724,18 @@ S.welcome = function(){
    +     '<div class="t28">Find out what leaves your account without asking you first.</div>'
    +     '<div class="t16" style="color:var(--ash)">Kitna reads the bank notifications already on your phone and adds up everything that repeats.</div>'
    +   '</div>'
-   +   '<div class="col g8"><span class="t14c">Finds things like</span>'
-   +     '<div class="tilestack">'+peek+'</div></div>'
+   +   '<div class="solid ink"><span class="k">Finds things like</span>'
+   +     '<div class="tilestack" style="margin-top:.85rem">'+peek+'</div></div>'
    + '</div></div>'
    + '<div class="acts"><button class="btn" data-go="ob1">Get started</button>'
    +   '<button class="btn outline" data-go="home">I already have an account</button></div></div>';
 };
 
-function ob(n, art, h, p, nextKey){
+function ob(n, art, h, p, nextKey, ground){
   var dots = [0,1,2].map(function(i){ return '<i class="'+(i===n?"on":"")+'"></i>'; }).join("");
   return '<div class="screen">' + statusbar()
    + '<div class="body"><div class="ob">'
-   +   '<div class="art">'+art+'</div>'
+   +   '<div class="artbox '+(ground||"cloud")+'"><div class="art">'+art+'</div></div>'
    +   '<div class="cap"><h2>'+h+'</h2><p>'+p+'</p></div>'
    +   '<div class="foot"><div class="dots2">'+dots+'</div>'
    +     '<button class="btn" data-go="'+nextKey+'">'+(n===2?"Set up my account":"Next")+'</button>'
@@ -721,11 +743,11 @@ function ob(n, art, h, p, nextKey){
    + '</div></div></div>';
 }
 S.ob1 = function(){ return ob(0, ART.otp, "Money leaves quietly now.",
-  "Since <b>April 2026</b>, recurring UPI payments under ₹15,000 no longer need an OTP. The message that used to warn you does not arrive any more.", "ob2"); };
+  "Since <b>April 2026</b>, recurring UPI payments under ₹15,000 no longer need an OTP. The message that used to warn you does not arrive any more.", "ob2", "rausch"); };
 S.ob2 = function(){ return ob(1, ART.group, "Your bank already tells you.",
-  "Every debit still lands as a notification. Kitna reads those, groups the ones that repeat, and works out what each one costs you <b>per year</b>.", "ob3"); };
+  "Every debit still lands as a notification. Kitna reads those, groups the ones that repeat, and works out what each one costs you <b>per year</b>.", "ob3", "cloud"); };
 S.ob3 = function(){ return ob(2, ART.device, "Nothing leaves this phone.",
-  "No account with us, no upload, no cloud. Kitna cannot move money and never asks for your UPI PIN. <b>Delete the app and the data goes with it.</b>", "profile"); };
+  "No account with us, no upload, no cloud. Kitna cannot move money and never asks for your UPI PIN. <b>Delete the app and the data goes with it.</b>", "profile", "luxe"); };
 
 S.profile = function(){
   return '<div class="screen">' + statusbar() + plainbar("", {back:"ob3"})
@@ -964,9 +986,11 @@ S.dead = function(){
 
   var body = '<div class="pad col g24" style="padding-top:.25rem;padding-bottom:1.5rem">';
 
-  body += '<div class="col g4">'
-   + '<div class="t28" style="color:var(--plus)">'+rs(yearly(CONF))+'</div>'
-   + '<div class="t16" style="color:var(--ash)">Confirmed unused. '+rs(yearly(UNK))+' more Kitna cannot vouch for.</div>'
+  body += '<div class="solid plus">'
+   + '<span class="k">Confirmed unused</span>'
+   + '<div class="big">'+rs(yearly(CONF))+'</div>'
+   + '<div class="sub">A year, on things this phone can prove you stopped opening. '
+   +   'Another '+rs(yearly(UNK))+' sits below that Kitna cannot vouch for.</div>'
    + '</div>';
 
   if (CONF.length){
@@ -1027,11 +1051,12 @@ S.checkin = function(){
   var s = SUBS.hotstar;
   return '<div class="screen">' + statusbar() + plainbar("", {back:"dead"})
    + '<div class="body"><div class="pad col g24" style="padding-top:1.5rem">'
-   + '<div style="display:flex;justify-content:center">'+tile(s,"lg")+'</div>'
-   + '<div class="col g8" style="text-align:center;align-items:center">'
-   +   '<h2 class="t28">Watched anything on JioHotstar lately?</h2>'
-   +   '<p class="t16" style="color:var(--ash);max-width:20rem">Kitna has not seen it open on this phone since 7 June, but you might watch on a TV. One tap settles it.</p>'
-   +   '<div class="t14c" style="margin-top:.4rem">₹299 per month · ₹3,588 a year</div>'
+   + '<div class="solid ink" style="text-align:center">'
+   +   '<div style="display:flex;justify-content:center;margin-bottom:1rem">'+tile(s,"lg")+'</div>'
+   +   '<span class="k">Asked once a month</span>'
+   +   '<div class="big" style="font-size:1.5rem;letter-spacing:-.02em">Watched anything on JioHotstar lately?</div>'
+   +   '<div class="sub">Not seen open on this phone since 7 June, but you might watch on a TV.</div>'
+   +   '<div class="sub" style="color:#fff;font-weight:600">₹299 per month · ₹3,588 a year</div>'
    + '</div>'
    + '</div></div>'
    + '<div class="acts">'
