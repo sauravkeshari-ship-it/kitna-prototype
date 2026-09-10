@@ -68,20 +68,24 @@ its limits stated on the screen. The app works without it.
 Kitna already reads every debit, not only the recurring ones. v2 spends that on
 the job it already has rather than on a general expense ledger.
 
-For each subscription it compares what you pay against what you actually
-consumed, and ends in a decision rather than a chart:
+Every figure on a card is one of three kinds, and the card says which:
 
-| Verdict | Example | Basis |
+- **Seen in your debits** — order count, amounts, totals, cost per order
+- **Usage access** — days opened, last opened
+- **Published rate** — a small price list Kitna ships and dates
+
+Nothing is inferred silently. Where the answer depends on something this phone
+cannot see, the card says **potential saving** and asks you.
+
+| Verdict | Example | Why |
 |---|---|---|
-| Cancel | Cult.fit, Rs 3,750 paid over 90 days, 0 visits | A day pass is Rs 350. You would have paid Rs 0. |
-| Downgrade | Netflix Premium, four screens, never more than one in use | Standard is Rs 499 and covers what you used |
-| Ask me | JioHotstar, no opens on this phone | Might be a TV. Only you know. |
-| Earning its keep | Swiggy One, 34 orders, Rs 1,530 of delivery waived for Rs 447 | Ahead by Rs 361 a month |
+| Certain saving | Cult.fit, Rs 15,000/yr | Rs 3,750 paid in 90 days, zero opens. Stopping a charge you can see saves exactly that. |
+| Potential saving | Amazon Prime, up to Rs 699/yr | 6 of your 11 orders were over Rs 499, where delivery is free anyway |
+| Potential saving | Netflix, up to Rs 1,800/yr | Rs 649 matches Premium. Kitna cannot see how many screens you use. |
+| Earning its keep | Swiggy One | Rs 13 an order against a fee that usually runs Rs 35 to Rs 60 |
 
-The flow is a triage: one card at a time, the arithmetic laid out, two buttons,
-a running total of what you have recovered, and a before/after on the run rate
-at the end. Rs 19,968 a year is backed by numbers; Rs 3,588 needs a word from
-you.
+Rs 15,000 is certain. Rs 8,475 is possible and openly marked as resting on your
+answer.
 
 This deliberately is **not** an expense tracker. No categories, no budgets, no
 monthly report, nothing for the user to maintain. That category is a commodity
