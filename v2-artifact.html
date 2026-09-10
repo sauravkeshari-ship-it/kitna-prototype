@@ -618,33 +618,33 @@ var RAMP = ["#222222","#3f3f3f","#6a6a6a","#929292","#c1c1c1","#dddddd"];
    already reads: the mandate debits plus the variable spend at the same
    merchant. No new permission, no ledger for the user to maintain.        */
 var WORTH = [
-  { k:"cult", v:"cancel", kind:"firm", head:"₹3,750 paid, nothing used",
+  { k:"cult", v:"cancel", kind:"firm", head:"Paid ₹3,750, went nowhere",
     rows:[["Paid, 90 days","₹3,750","your debits"],
           ["Opens since 30 Jun","0","usage access"],
           ["Cult.fit day pass","₹350","published Sep 2026"]],
-    alt:"At zero visits, paying per use would have cost you nothing. Cancelling stops a charge you can see, so this saving is certain.",
+    alt:"You went zero times. Day passes would have cost you nothing.",
     save:15000, act:"Cancel it" },
 
-  { k:"hotstar", v:"potential", kind:"potential", head:"Not opened here since 7 June",
+  { k:"hotstar", v:"potential", kind:"potential", head:"Not opened since 7 June",
     rows:[["Paid, 90 days","₹897","your debits"],
           ["Opens here","0","usage access"],
           ["TV or laptop","not visible","no access"]],
-    alt:"If you watch on a TV this is money well spent. Kitna has no way to check, so only you can settle it.",
+    alt:"Fine if you watch on a TV. Kitna cannot see that.",
     save:3588, act:"Cancel it" },
 
-  { k:"audible", v:"potential", kind:"potential", head:"No sign of it on this phone",
+  { k:"audible", v:"potential", kind:"potential", head:"No sign of it here",
     rows:[["Paid, 90 days","₹597","your debits"],
           ["Opens here","0","usage access"],
           ["Echo or browser","not visible","no access"]],
-    alt:"Audible runs on speakers and browsers too. Kitna cannot see your credits or your library.",
+    alt:"Audible works on speakers and browsers too. Kitna cannot see those.",
     save:2388, act:"Cancel it" },
 
-  { k:"netflix", v:"potential", kind:"potential", head:"Premium, and opens are falling",
+  { k:"netflix", v:"potential", kind:"potential", head:"Premium, but barely opened",
     rows:[["Your charge","₹649 monthly","your debits"],
           ["Matches","Premium · 4 screens","published Sep 2026"],
           ["Standard plan","₹499 monthly","published Sep 2026"],
           ["Opens last month","4, was 19","usage access"]],
-    alt:"Kitna cannot see how many screens you actually use. If one is enough, Standard costs ₹150 less a month.",
+    alt:"If one screen is enough, Standard saves ₹150 a month.",
     save:1800, act:"Downgrade" },
 
   { k:"prime", v:"potential", kind:"potential", head:"Six of eleven orders did not need it",
@@ -652,7 +652,7 @@ var WORTH = [
           ["Orders","11","your debits"],
           ["Orders over ₹499","6","your debits"],
           ["Delivery under ₹499","about ₹40","published Sep 2026"]],
-    alt:"Delivery is free above ₹499 anyway, so Prime only earned its keep on 5 of your 11 orders. Roughly ₹200 of fees against ₹375 paid.",
+    alt:"Delivery is free above ₹499 anyway. Prime helped on 5 of your 11 orders.",
     save:699, act:"Cancel it" },
 
   { k:"swiggy", v:"keep", kind:"firm", head:"₹13 an order",
@@ -660,20 +660,20 @@ var WORTH = [
           ["Orders","34","your debits"],
           ["Cost per order","₹13","your figures"],
           ["Swiggy delivery fee","₹35 to ₹60","published Sep 2026"]],
-    alt:"₹13 an order to skip a fee that usually runs ₹35 to ₹60. Comfortably ahead.",
+    alt:"₹13 an order to skip a ₹35 to ₹60 fee.",
     save:0, act:"Keep" },
 
   { k:"chatgpt", v:"keep", kind:"firm", head:"Opened almost every day",
     rows:[["Paid, 90 days","₹5,997","your debits"],
           ["Days opened","22 of the last 30","usage access"],
           ["Cost per day used","₹91","your figures"]],
-    alt:"Nothing to change here.",
+    alt:"Nothing to change.",
     save:0, act:"Keep" }
 ];
 var VLABEL = { cancel:"Certain saving", potential:"Potential saving", keep:"Earning its keep" };
-var VNOTE  = { cancel:"You can see the charge, so stopping it saves exactly this.",
-               potential:"Depends on something Kitna cannot see. Your answer decides it.",
-               keep:"Costs less than doing without it." };
+var VNOTE  = { cancel:"You pay for these and do not use them.",
+               potential:"Depends on something only you know.",
+               keep:"Cheaper than paying each time." };
 var TI = 0;            // triage position
 var DECIDED = {};      // k -> action taken
 
@@ -768,7 +768,7 @@ var ART = {
    + '<text x="105" y="111" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#222222">OTP</text>'
    + '<path d="M46 130 164 80" stroke="#ff385c" stroke-width="4" stroke-linecap="round"/></svg>',
 
-  group: '<svg viewBox="0 0 210 140" role="img" aria-label="Three bank messages grouped into one mandate">'
+  group: '<svg viewBox="0 0 210 140" role="img" aria-label="Three bank messages becoming one charge">'
    + '<rect x="12" y="12" width="74" height="28" rx="8" fill="none" stroke="#dddddd" stroke-width="2"/>'
    + '<path d="M24 26h40" stroke="#dddddd" stroke-width="3.5" stroke-linecap="round"/>'
    + '<rect x="12" y="56" width="74" height="28" rx="8" fill="none" stroke="#dddddd" stroke-width="2"/>'
@@ -849,7 +849,7 @@ S.welcome = function(){
    +   '<div class="brandline" style="font-size:2.75rem">कितना</div>'
    +   '<div class="col g12">'
    +     '<div class="t28">Find out what leaves your account without asking you first.</div>'
-   +     '<div class="t16" style="color:var(--ash)">Kitna reads the bank notifications already on your phone and adds up everything that repeats.</div>'
+   +     '<div class="t16" style="color:var(--ash)">It reads the bank messages already on your phone and adds up what repeats.</div>'
    +   '</div>'
    +   '<div class="solid ink"><span class="k">Finds things like</span>'
    +     '<div class="tilestack" style="margin-top:.85rem">'+peek+'</div></div>'
@@ -870,11 +870,11 @@ function ob(n, art, h, p, nextKey, ground){
    + '</div></div></div>';
 }
 S.ob1 = function(){ return ob(0, ART.otp, "Money leaves quietly now.",
-  "Since <b>April 2026</b>, recurring UPI payments under ₹15,000 no longer need an OTP. The message that used to warn you does not arrive any more.", "ob2", "rausch"); };
+  "Since <b>April 2026</b>, auto-payments under ₹15,000 skip the OTP. The warning you used to get never arrives.", "ob2", "rausch"); };
 S.ob2 = function(){ return ob(1, ART.group, "Your bank already tells you.",
-  "Every debit still lands as a notification. Kitna reads those, groups the ones that repeat, and works out what each one costs you <b>per year</b>.", "ob3", "cloud"); };
+  "Every charge still lands as a message. Kitna reads those, spots the ones that repeat, and works out the <b>yearly</b> cost.", "ob3", "cloud"); };
 S.ob3 = function(){ return ob(2, ART.device, "Nothing leaves this phone.",
-  "No account with us, no upload, no cloud. Kitna cannot move money and never asks for your UPI PIN. <b>Delete the app and the data goes with it.</b>", "profile", "luxe"); };
+  "No account, no upload. Kitna cannot move money and never asks for your PIN. <b>Delete the app and it is gone.</b>", "profile", "luxe"); };
 
 S.profile = function(){
   return '<div class="screen">' + statusbar() + plainbar("", {back:"ob3"})
@@ -885,7 +885,7 @@ S.profile = function(){
    +   '<div class="inp">'+ic("i-user","sm")+'<input type="text" value="Saurav Keshari" autocomplete="name"></div></div>'
    + '<div class="field"><span class="flabel">Mobile number</span>'
    +   '<div class="inp"><span class="pre">+91</span><input type="tel" value="98··· ···21" inputmode="numeric"></div>'
-   +   '<p class="help">Matched once against the number your bank sends alerts to. We never message you. '
+   +   '<p class="help">Matched once against the number your bank texts. We never message you. '
    +   '<a class="inlink" href="#">How this is stored</a></p></div>'
    + '</div></div>'
    + '<div class="acts"><button class="btn" data-go="otp">Send code</button></div></div>';
@@ -904,29 +904,27 @@ S.otp = function(){
 };
 
 S.permission = function(){
-  var yes = ["Runs entirely <b>on this phone</b>. Nothing is uploaded.",
-             "Reads <b>bank and UPI notifications</b> to spot charges that repeat.",
-             "Can be switched off any time in Android Settings."];
-  var no  = ["Never asks for your <b>net banking or UPI PIN</b>.",
-             "Cannot <b>move money</b>. It has no such permission.",
-             "Does not read your personal chats."];
+  var yes = ["Works <b>on this phone only</b>. Nothing is uploaded.",
+             "Reads <b>bank messages</b> to find charges that repeat."];
+  var no  = ["Never asks for your <b>PIN</b>.",
+             "<b>Cannot move money.</b> It has no such permission."];
   var item = function(t, ok){
     return '<div class="pitem"><span class="'+(ok?"ok":"no")+'">'+ic(ok?"i-check":"i-close")+'</span><span class="t">'+t+'</span></div>';
   };
   return '<div class="screen">' + statusbar() + plainbar("", {back:"otp"})
    + '<div class="body"><div class="pad col g16">'
-   + '<h2 class="t28">One permission, then you are done.</h2>'
-   + '<p class="t16" style="color:var(--ash)">Kitna needs to see notifications to find your recurring charges. Here is exactly what that means.</p>'
+   + '<h2 class="t28">One permission and you are set.</h2>'
+   + '<p class="t16" style="color:var(--ash)">Here is exactly what that means.</p>'
    + '<div class="plist">' + yes.map(function(t){return item(t,1);}).join("") + no.map(function(t){return item(t,0);}).join("") + '</div>'
    + '</div></div>'
    + '<div class="acts"><button class="btn" data-go="scanning">Turn on notification access</button>'
    +   '<button class="btn outline" data-go="home:none">I will add them myself</button>'
-   +   '<p class="help" style="text-align:center">This is the only permission Kitna needs. One more is offered later, and it is optional.</p></div></div>';
+   +   '<p class="help" style="text-align:center">The only one Kitna needs. One more is offered later, and it is optional.</p></div></div>';
 };
 
 S.scanning = function(){
-  var lines = [["HDFC Bank ···4412","7 mandates",1],["Google Pay UPI","4 mandates",1],
-               ["ICICI Amazon Pay","2 mandates",1],["Axis Bank ···8807","reading",0],["Paytm UPI","queued",0]];
+  var lines = [["HDFC Bank ···4412","7 found",1],["Google Pay UPI","4 found",1],
+               ["ICICI Amazon Pay","2 found",1],["Axis Bank ···8807","reading",0],["Paytm UPI","queued",0]];
   return '<div class="screen">' + statusbar()
    + '<div class="body"><div class="pad col g16" style="padding-top:2rem">'
    + '<div class="col g8"><span class="t14c">Reading 6 months of notifications</span>'
@@ -966,9 +964,9 @@ S.home = function(){
      + '<div class="body"><div class="pad col g16" style="padding-top:1.5rem">'
      + '<div class="empty"><div class="art mini">'+ART.cal+'</div>'
      +   '<h2>Nothing repeating yet</h2>'
-     +   '<p>Kitna needs to see the same merchant charge you <b>twice</b> before it calls something a subscription. That usually takes about a month.</p>'
+     +   '<p>Kitna waits to see the same charge <b>twice</b> before counting it. Usually about a month.</p>'
      + '</div>'
-     + notice({icon:"i-check", t:"Notification access is on", d:"Watching 3 payment methods since 9 Sep"})
+     + notice({icon:"i-check", t:"Notification access is on", d:"Watching 3 accounts since 9 Sep"})
      + '<button class="btn outline" data-go="add">Add one manually</button>'
      + '</div></div>' + tabbar("home") + '</div>';
   }
@@ -994,14 +992,13 @@ S.home = function(){
     : '<span class="delta flat">No change since June</span>';
 
   var hero = '<div class="hero">'
-   + '<div class="minihd"><span class="eyebrow">Annual run rate</span>'
+   + '<div class="minihd"><span class="eyebrow">Leaving each year</span>'
    +   '<span class="asof">as of 10 Sep, 9:41 am</span></div>'
    + '<div class="grow">'
    +   '<div class="bignum">'+rs(yearly(L))+'</div>'
    +   '<div style="display:flex;align-items:center;gap:.5rem;flex-wrap:wrap">'
-   +     '<span class="t12b" style="letter-spacing:.32px;text-transform:uppercase">Leaving each year</span>'
    +     delta + '</div>'
-   +   '<div class="t14c" style="margin-top:.1rem">'+L.length+' mandates · 3 payment methods'
+   +   '<div class="t14c" style="margin-top:.1rem">'+L.length+' auto-payments · 3 accounts'
    +     (CONF.length ? ' · <span style="color:var(--plus);font-weight:600">'+CONF.length+' unused</span>' : '')
    +   '</div>'
    + '</div>'
@@ -1016,7 +1013,7 @@ S.home = function(){
   var prio = CONF.length
     ? '<button class="prio" data-go="upcoming">' + ic("i-alert")
       + '<span><span class="t">₹1,999 leaves in 2 days</span>'
-      + '<span class="d">ChatGPT Plus · no OTP will be sent</span></span>'
+      + '<span class="d">ChatGPT Plus · no OTP</span></span>'
       + ic("i-next","sm") + '</button>'
     : '';
 
@@ -1037,14 +1034,12 @@ S.home = function(){
    + ic("i-next","sm") + '</button>';
 
   if (CONF.length){
-    body += '<div class="col g16">' + shead("Not opened on this phone", rs(monthly(CONF))+" / mo")
-      + '<p class="t13" style="margin-top:-.4rem">You open these to use them, so silence here is real.</p>'
+    body += '<div class="col g16">' + shead("Not used in months", rs(monthly(CONF))+" / mo")
       + '<div class="col g12">' + CONF.map(icard).join("") + '</div></div>';
   }
 
   if (UNK.length){
-    body += '<div class="col g16">' + shead("Kitna cannot tell", rs(monthly(UNK))+" / mo")
-      + '<p class="t13" style="margin-top:-.4rem">These also run on TVs, laptops and speakers. This phone seeing nothing proves nothing.</p>'
+    body += '<div class="col g16">' + shead("Might be used elsewhere", rs(monthly(UNK))+" / mo")
       + '<div class="col g12">' + UNK.map(askcard).join("") + '</div></div>';
   }
 
@@ -1055,12 +1050,12 @@ S.home = function(){
    + '</div>';
 
   if (P.length){
-    body += disc("Deliberate, not a leak", rs(monthly(P))+" / mo",
+    body += disc("Left out of the total", rs(monthly(P))+" / mo",
         '<div>' + P.map(function(s){ return crow(s, {tier:"luxe", sub:"Kept out of the yearly total"}); }).join("") + '</div>'
       + '<p class="t13" style="padding-top:.75rem">Investments and insurance sit outside the number on purpose. Open one to move it back in.</p>',
       true);
   }
-  body += '<button class="btn outline" data-go="add">Add something Kitna missed</button></div>';
+  body += '<button class="btn outline" data-go="add">Add one manually</button></div>';
 
   return '<div class="screen">' + statusbar() + head + '<div class="body">'+body+'</div>' + tabbar("home") + '</div>';
 };
@@ -1072,7 +1067,7 @@ S.upcoming = function(){
     return '<div class="screen">' + statusbar() + plainbar("Upcoming")
      + '<div class="body"><div class="pad"><div class="empty">'
      + '<div class="art mini">'+ART.cal+'</div>'
-     + '<h2>Nothing scheduled</h2><p>When Kitna finds a repeating charge, its next date lands here so you can keep the balance ready.</p>'
+     + '<h2>Nothing scheduled</h2><p>Charges show up here before they leave, so you can keep the balance ready.</p>'
      + '</div></div></div>' + tabbar("upcoming") + '</div>';
   }
   var WD = ["Thu","Fri","Thu","Sun","Wed","Sat","Tue","Wed","Sun","Tue","Mon","Fri"];
@@ -1087,7 +1082,7 @@ S.upcoming = function(){
   var body = '<div class="pad col g24" style="padding-bottom:1.5rem">';
   if (idles().length){
     body += notice({err:1, icon:"i-alert", t:"HDFC ···4412 has ₹1,240",
-      d:"Three mandates hit it before your 1 Oct salary. Two will bounce and cost ₹236 in return charges."});
+      d:"Three charges land before your 1 Oct salary. Two will bounce, costing ₹236."});
   }
   order.forEach(function(date,i){
     var g = groups[date], hot = g.some(function(s){ return s.d<=3; });
@@ -1099,7 +1094,7 @@ S.upcoming = function(){
                          tier: s.planned ? "luxe" : (s.idle>=60 ? "plus" : "")});
        }).join("") + '</div></div>';
   });
-  body += notice({icon:"i-check", t:"Salary lands 1 Oct", d:"Everything after it clears"}) + '</div>';
+  body += notice({icon:"i-check", t:"Salary lands 1 Oct", d:"Everything after that clears"}) + '</div>';
   return '<div class="screen">' + statusbar() + plainbar("Upcoming") + '<div class="body">'+body+'</div>' + tabbar("upcoming") + '</div>';
 };
 
@@ -1121,31 +1116,27 @@ S.dead = function(){
   var body = '<div class="pad col g24" style="padding-top:.25rem;padding-bottom:1.5rem">';
 
   body += '<div class="solid plus">'
-   + '<span class="k">Confirmed unused</span>'
+   + '<span class="k">Not used at all</span>'
    + '<div class="big">'+rs(yearly(CONF))+'</div>'
-   + '<div class="sub">A year, on things this phone can prove you stopped opening. '
-   +   'Another '+rs(yearly(UNK))+' sits below that Kitna cannot vouch for.</div>'
+   + '<div class="sub">A year. Another '+rs(yearly(UNK))+' might be waste too, but only you can say.</div>'
    + '</div>';
 
   if (CONF.length){
-    body += '<div class="col g16">' + shead("Not opened on this phone", CONF.length+" of them")
-     + '<p class="t13" style="margin-top:-.4rem">You open these to use them. '+(USAGE?"Usage access confirms it.":"")+'</p>'
+    body += '<div class="col g16">' + shead("Not used", CONF.length+" of them")
      + '<div class="col g12">' + CONF.map(icard).join("") + '</div></div>';
   }
   if (UNK.length){
-    body += '<div class="col g16">' + shead("Kitna cannot tell", UNK.length+" of them")
-     + '<p class="t13" style="margin-top:-.4rem">Also used on TVs, laptops and speakers. Only you know.</p>'
+    body += '<div class="col g16">' + shead("Might be used elsewhere", UNK.length+" of them")
      + '<div class="col g12">' + UNK.map(askcard).join("") + '</div></div>';
   }
   if (MUT.length){
-    body += '<div class="col g8">' + shead("You said you use these", MUT.length+"")
+    body += '<div class="col g8">' + shead("You said these are fine", MUT.length+"")
      + '<div>' + MUT.map(function(s){
          return crow(s, {sub:"Marked as used elsewhere", tier:"luxe"}); }).join("") + '</div></div>';
   }
   if (SEEN.length){
     body += disc("Nothing to check", SEEN.length+" of them",
-       '<p class="t13" style="padding-bottom:.75rem">Storage, telecom, insurance and investments run without an app to open. '
-     + 'A quiet phone says nothing about them, so Kitna never calls them unused.</p>'
+       '<p class="t13" style="padding-bottom:.75rem">Storage, phone bills and insurance have no app to open. Kitna never calls these unused.</p>'
      + '<div>' + SEEN.map(function(s){ return crow(s, {sub:evidenceLabel(s), tier:"luxe"}); }).join("") + '</div>',
        true);
   }
@@ -1162,12 +1153,11 @@ S.worth = function(){
   var W = worthList(), groups = ["cancel","potential","keep"];
   var body = '<div class="pad col g24" style="padding-top:.25rem;padding-bottom:1.5rem">'
    + '<div class="solid ink">'
-   +   '<span class="k">Certain saving a year</span>'
+   +   '<span class="k">Worth cancelling</span>'
    +   '<div class="big">'+rs(firmSave())+'</div>'
-   +   '<div class="sub">Money Kitna can see leaving, on something you can see you are not using. '
-   +     'A further <b style="color:#fff">'+rs(potentialSave())+'</b> is possible, but rests on things this phone cannot check.</div>'
+   +   '<div class="sub">A year. Another <b style="color:#fff">'+rs(potentialSave())+'</b> depends on your answer.</div>'
    + '</div>'
-   + '<p class="t13">Everything below comes from debits Kitna already reads, plus a small published price list. Nothing was collected that it did not already have, and nothing is guessed without saying so.</p>';
+   + '<p class="t13">Based on what you paid and what you used.</p>';
 
   groups.forEach(function(g){
     var rows = W.filter(function(w){ return w.v === g; });
@@ -1240,14 +1230,14 @@ S.worthdone = function(){
 
   return '<div class="screen">' + statusbar() + plainbar("", {back:"home"})
    + '<div class="body"><div class="pad col g24" style="padding-top:.25rem;padding-bottom:1.5rem">'
-   + '<div class="solid ink"><span class="k">Cut from the run rate</span>'
+   + '<div class="solid ink"><span class="k">You cut</span>'
    +   '<div class="big">'+rs(cut)+'</div>'
-   +   '<div class="sub">A year. Every figure behind these came from your own debits or a published price, both shown on the card.</div></div>'
+   +   '<div class="sub">A year, off your total.</div></div>'
    + '<div class="ba"><div class="c"><div class="k">Was</div><div class="v old">'+rs(before)+'</div></div>'
    +   '<span>'+ic("i-next","sm")+'</span>'
    +   '<div class="c"><div class="k">Now</div><div class="v">'+rs(after)+'</div></div></div>'
    + (rows ? '<div class="col g8">' + shead("What you decided") + '<div>'+rows+'</div></div>' : '')
-   + '<p class="t13">Kitna cannot cancel anything for you. Each of these opens the merchant or your UPI app, and Kitna watches for the debit to stop.</p>'
+   + '<p class="t13">Kitna cannot cancel for you. Each one opens the app, then watches for the charge to stop.</p>'
    + '<button class="btn" data-go="home:full:on">Back to home</button>'
    + '<button class="btn outline" data-restart>Run it again</button>'
    + '</div></div></div>';
@@ -1256,16 +1246,16 @@ S.worthdone = function(){
 /* ── optional usage access ── */
 S.usage = function(){
   var rows = [
-    ["i-check","Only reads the last-used date","Not what you did in an app, not for how long."],
-    ["i-check","Works for apps you open to use","A gym you check into, food you order, rides you book."],
-    ["i-close","Cannot see TVs, laptops or speakers","Netflix on the TV is invisible to this phone. Kitna will say so instead of guessing."],
+    ["i-check","Reads the last-used date only","Not what you did, not for how long."],
+    ["i-check","Works for apps you open to use","A gym you check into, food you order."],
+    ["i-close","Cannot see TVs or speakers","Netflix on the TV is invisible. Kitna will say so."],
     ["i-close","Never leaves the phone","Same as everything else here."]
   ];
   return '<div class="screen">' + statusbar() + plainbar("", {back:"home"})
    + '<div class="body"><div class="pad col g16" style="padding-top:.25rem">'
    + '<span class="optional">Optional</span>'
    + '<h2 class="t28">Want Kitna to spot the ones you stopped using?</h2>'
-   + '<p class="t16" style="color:var(--ash)">Everything works without this. Turn it on and Kitna can also tell you when you have stopped opening something you still pay for.</p>'
+   + '<p class="t16" style="color:var(--ash)">Everything works without it. Turn it on and Kitna can also spot what you stopped opening.</p>'
    + '<div class="plist">' + rows.map(function(r){
        return '<div class="pitem"><span class="'+(r[0]==="i-check"?"ok":"no")+'">'+ic(r[0])+'</span>'
         + '<span class="t"><b>'+r[1]+'</b><br><span style="color:var(--ash);font-size:.875rem">'+r[2]+'</span></span></div>';
@@ -1285,14 +1275,14 @@ S.checkin = function(){
    +   '<div style="display:flex;justify-content:center;margin-bottom:1rem">'+tile(s,"lg")+'</div>'
    +   '<span class="k">Asked once a month</span>'
    +   '<div class="big" style="font-size:1.5rem;letter-spacing:-.02em">Watched anything on JioHotstar lately?</div>'
-   +   '<div class="sub">Not seen open on this phone since 7 June, but you might watch on a TV.</div>'
+   +   '<div class="sub">Not opened here since 7 June, but you might watch on a TV.</div>'
    +   '<div class="sub" style="color:#fff;font-weight:600">₹299 per month · ₹3,588 a year</div>'
    + '</div>'
    + '</div></div>'
    + '<div class="acts">'
    +   '<button class="btn outline" data-mute="JioHotstar Super" data-go="dead">Yes, I watch it elsewhere</button>'
    +   '<button class="btn" data-go="detail">No, cancel it</button>'
-   +   '<p class="help" style="text-align:center">Asked once a month, only for things Kitna cannot see.</p></div></div>';
+   +   '<p class="help" style="text-align:center">Asked once a month, only for what Kitna cannot see.</p></div></div>';
 };
 
 /* ── detail ── */
@@ -1317,14 +1307,14 @@ S.detail = function(){
 
    + '<div class="col g16">' + shead("How Kitna knows")
    +   '<div>'
-   +   [[1,"Debit messages","11 matching HDFC SMS since Nov 2024"],
-      [1,"App opens","Usage access is on, and this is an app you open to use"],
-      [0,"Booking notifications","None since 30 June"],
-      [0,"The gym\u2019s own records","Kitna has no access to these, and never will"]]
+   +   [[1,"Bank messages","11 since Nov 2024"],
+      [1,"App opens","You open this one to use it"],
+      [0,"Booking messages","None since 30 June"],
+      [0,"The gym\u2019s own records","Kitna has no access"]]
      .map(function(r){ return '<div class="evid"><span class="'+(r[0]?"y":"n")+'">'+ic(r[0]?"i-check":"i-close","sm")+'</span>'
       + '<span><b style="color:var(--ink);font-weight:600">'+r[1]+'</b><br>'+r[2]+'</span></div>'; }).join("")
    +   '</div>'
-   +   '<p class="t13">Cult.fit is checked into through the app, so no opens means no visits. Kitna would not make this claim about Netflix.</p>'
+   +   '<p class="t13">You check in through the app, so no opens means no visits.</p>'
    + '</div>'
 
    + '<div class="col g16">' + shead("Check-ins")
@@ -1335,35 +1325,35 @@ S.detail = function(){
    +   '<p class="t13">From app opens on this phone. Kitna cannot see the gym’s own records.</p>'
    + '</div>'
 
-   + '<div class="col g8">' + shead("Mandate details") + '<div>'
-   + [["Amount","₹1,250 monthly"],["Next charge","12 Sep · in 3 days"],["Mandate type","UPI Autopay, no OTP"],
-      ["Mandate cap","₹2,000"],["Valid until","Nov 2029"],["Detected from","HDFC SMS · 11 matches"],
-      ["Paid so far","₹13,750 over 11 charges"]]
+   + '<div class="col g8">' + shead("The details") + '<div>'
+   + [["Amount","₹1,250 monthly"],["Next charge","12 Sep, in 3 days"],["Type","Auto-pay, no OTP"],
+      ["Most it can take","₹2,000"],["Valid until","Nov 2029"],["Found in","11 HDFC messages"],
+      ["Paid so far","₹13,750"]]
      .map(function(r){ return '<div class="arow"><span>'+ic("i-check","sm")+'</span><span class="l">'+r[0]+'</span><span class="v">'+r[1]+'</span></div>'; }).join("")
    + '</div></div>'
 
    + '<div class="merchant">' + tile(s)
    +   '<div><div class="hn">Cultfit Healthcare Pvt Ltd</div>'
-   +   '<div class="ht">Merchant on 3 of your mandates · MCC 7997</div></div>'
+   +   '<div class="ht">On 3 of your auto-payments</div></div>'
    +   '<button class="btn outline pill sm" data-go="detail">See all 3</button></div>'
 
    + '<div class="ttk">'
-   +   '<div class="b"><h3>What revoking does</h3><p>Stops the autopay instruction at your bank. It does not cancel your Cult.fit membership — do that in their app too, or they may chase the dues.</p></div>'
-   +   '<div class="b"><h3>If you do nothing</h3><p>₹1,250 leaves on 12 Sep with no OTP and no confirmation message.</p></div>'
-   +   '<div class="b"><h3>Where this came from</h3><p>11 matching HDFC debit messages. Nothing was fetched from your bank.</p></div>'
+   +   '<div class="b"><h3>If you stop it</h3><p>Your bank stops the auto-payment. It does not cancel the membership, do that in their app too.</p></div>'
+   +   '<div class="b"><h3>If you do nothing</h3><p>₹1,250 leaves on 12 Sep. No OTP, no message.</p></div>'
+   +   '<div class="b"><h3>Where this came from</h3><p>11 HDFC messages. Nothing came from your bank.</p></div>'
    + '</div>'
    + '</div></div>'
 
    + '<div class="reserve"><div class="p"><div class="pv">₹1,250 <span style="font-weight:500;color:var(--ash)">monthly</span></div>'
-   +   '<div class="pd">Next charge 12 Sep · you will not be warned</div></div>'
-   +   '<button class="btn" data-go="dead">Revoke</button></div></div>';
+   +   '<div class="pd">12 Sep · no warning</div></div>'
+   +   '<button class="btn" data-go="dead">Stop it</button></div></div>';
 };
 
 /* ── add ── */
 S.add = function(){
   return '<div class="screen">' + statusbar() + plainbar("Add a charge", {back:"home"})
    + '<div class="body"><div class="form">'
-   + '<p class="lede">For anything Kitna cannot see — a gym you pay in cash, or a family plan on someone else’s card.</p>'
+   + '<p class="lede">For anything Kitna cannot see. A gym you pay in cash, a plan on someone else’s card.</p>'
    + '<div class="field"><span class="flabel">What is it</span><div class="inp">'+ic("i-card","sm")+'<input type="text" placeholder="Gym, newspaper, help at home…"></div></div>'
    + '<div class="field"><span class="flabel">Amount</span><div class="inp"><span class="pre">₹</span><input type="text" placeholder="1,250" inputmode="numeric"></div></div>'
    + '<div class="field"><span class="flabel">How often</span><div class="chips" data-chipgroup="cycle">'
@@ -1398,19 +1388,19 @@ S.settings = function(){
    +   '<span class="r">'+ic("i-next","sm")+'</span></button>'
 
    + '<div class="col g8">' + shead("Alerts") + '<div>'
-   +   srow({i:"i-bell", l:"Notifications", d:"6 of 7 turned on", go:"notif"})
+   +   srow({i:"i-bell", l:"Notifications", d:"6 of 7 on", go:"notif"})
    +   srow({i:"i-moon", l:"Quiet hours", v:"10 pm – 8 am", go:"notif"})
    + '</div></div>'
 
    + '<div class="col g8">' + shead("What Kitna watches") + '<div>'
-   +   srow({i:"i-card", l:"Payment methods", d:"HDFC ···4412, GPay UPI, ICICI ···9034", v:"3", go:"settings"})
+   +   srow({i:"i-card", l:"Payment methods", d:"HDFC, GPay, ICICI", v:"3", go:"settings"})
    +   srow({i:"i-plus", l:"Manually added", v:"0", go:"add"})
-   +   srow({i:"i-chart", l:"Count investments in the total", d:"Off. SIP and insurance stay outside the yearly number.", sw:0})
+   +   srow({i:"i-chart", l:"Count investments", d:"Off. SIP and insurance stay out of the total.", sw:0})
    + '</div></div>'
 
    + '<div class="col g8">' + shead("Your data") + '<div>'
-   +   srow({i:"i-lock", l:"Everything stays on this phone", d:"No account, no cloud backup, no analytics."})
-   +   srow({i:"i-export", l:"Export as CSV", d:"14 mandates, 96 detected charges", go:"settings"})
+   +   srow({i:"i-lock", l:"Everything stays on this phone", d:"No account, no backup, no tracking."})
+   +   srow({i:"i-export", l:"Export as CSV", d:"14 auto-payments, 96 charges", go:"settings"})
    +   srow({i:"i-trash", l:"Delete everything", d:"Cannot be undone", danger:1, go:"settings"})
    + '</div></div>'
 
@@ -1432,7 +1422,7 @@ S.notif = function(){
   return '<div class="screen">' + statusbar() + plainbar("Notifications", {back:"settings"})
    + '<div class="body"><div class="pad col g32" style="padding-bottom:1.5rem">'
    + '<div class="col g16">' + shead("Before a charge")
-   + '<div>' + t("Warn me before every charge","One notification per mandate",1)
+   + '<div>' + t("Before every charge","One message each",1)
    +   t("Only above an amount","Skip the small ones",1) + '</div>'
    + '<div class="col g8"><span class="t14c">Amount floor</span>'
    +   '<div class="chips" data-chipgroup="amt"><button class="chipb">₹100</button>'
@@ -1442,15 +1432,15 @@ S.notif = function(){
    +   '<button class="chipb on">1 day</button><button class="chipb">2 days</button><button class="chipb">3 days</button></div></div>'
    + '</div>'
    + '<div class="col g8">' + shead("Warnings") + '<div>'
-   +   t("Balance too low","When the account cannot cover what is due",1)
-   +   t("New mandate detected","Someone set up a new autopay on your account",1)
-   +   t("Amount went up","A merchant charged more than last time",1) + '</div></div>'
+   +   t("Balance too low","When there is not enough to cover it",1)
+   +   t("New auto-payment","Someone set one up on your account",1)
+   +   t("Price went up","Charged more than last time",1) + '</div></div>'
    + '<div class="col g8">' + shead("Summaries") + '<div>'
-   +   t("Weekly idle digest","Sunday morning, what you are not using",1)
-   +   t("Monthly total","First of the month, the yearly number",0) + '</div></div>'
+   +   t("Weekly summary","Sunday, what you are not using",1)
+   +   t("Monthly total","First of the month",0) + '</div></div>'
    + '<div class="col g8">' + shead("Quiet hours") + '<div>'
-   +   t("Hold notifications overnight","10 pm to 8 am. Charge warnings still come through.",1) + '</div>'
-   + '<p class="t12" style="padding-top:.75rem">Kitna never sends promotional notifications. There is nothing to sell you.</p></div>'
+   +   t("Hold overnight","10 pm to 8 am. Charge warnings still come through.",1) + '</div>'
+   + '<p class="t12" style="padding-top:.75rem">Kitna never sends ads. There is nothing to sell you.</p></div>'
    + '</div></div></div>';
 };
 
@@ -1459,7 +1449,7 @@ var VIEWS = [
   ["Getting in", [
     ["welcome","01","Welcome","Wordmark plus a stack of real icons"],
     ["ob1","02","Why now","The struck-out OTP, drawn small"],
-    ["ob2","03","How it reads","Three messages become one mandate"],
+    ["ob2","03","How it reads","Three messages become one charge"],
     ["ob3","04","Where it stays","Phone locked, cloud severed"],
     ["profile","05","Name & mobile","Info Blue is the only link colour"],
     ["otp","06","Verify","4 digits, Ink Black focus ring"],
@@ -1470,7 +1460,7 @@ var VIEWS = [
   ["Home", [
     ["home:full:on","10","Usage on","1 confirmed unused, 2 it cannot vouch for"],
     ["home:full:off","11","Usage off","NEW · claims nothing, offers the upgrade"],
-    ["home:few:on","12","Just a few","3 mandates, nothing to question"],
+    ["home:few:on","12","Just a few","3 auto-payments, nothing to question"],
     ["home:none:on","13","Empty","First month, nothing detected"]
   ]],
   ["Upcoming", [
@@ -1489,7 +1479,7 @@ var VIEWS = [
     ["worthdone","22","Result","NEW · run rate before and after"]
   ]],
   ["Detail & input", [
-    ["detail","23","Mandate detail","Evidence ledger, not a flat claim"],
+    ["detail","23","One charge, in full","Where every number came from"],
     ["add","24","Add manually","Chips and a switch"]
   ]],
   ["Settings", [
