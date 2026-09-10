@@ -104,7 +104,7 @@ button{font-family:inherit}
 .cbtn:focus-visible{box-shadow:0 0 0 2px var(--ink)}
 
 /* ── buttons ── */
-.btn{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;text-align:center;
+.btn{all:unset;box-sizing:border-box;cursor:pointer;display:block;width:100%;text-align:center;overflow-wrap:break-word;
   background:var(--rausch);color:#fff;font-size:1rem;font-weight:500;padding:14px 24px;
   border-radius:8px;transition:transform .12s,background .12s}
 .btn:hover{background:var(--rausch-deep)}
@@ -164,11 +164,11 @@ button{font-family:inherit}
 .tier.err{color:var(--err)}
 
 /* worth-it flow */
-.trow{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-  padding:11px 0;border-bottom:1px solid var(--hairline)}
+.trow{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;
+  gap:.2rem 1rem;padding:11px 0;border-bottom:1px solid var(--hairline)}
 .trow:last-child{border-bottom:0}
-.trow .l{font-size:.9375rem;font-weight:500;color:var(--ash);flex:0 1 auto;min-width:0}
-.trow .r2{flex:1 1 auto;min-width:0;text-align:right}
+.trow .l{font-size:.9375rem;font-weight:500;color:var(--ash);flex:1 1 8rem;min-width:0}
+.trow .r2{flex:1 1 7rem;min-width:0;text-align:right}
 .trow .v{font-size:.9375rem;font-weight:600;overflow-wrap:anywhere;display:block}
 .trow .src{font-size:.6875rem;font-weight:500;color:var(--mute);display:block;margin-top:1px}
 .wrow{all:unset;box-sizing:border-box;cursor:pointer;width:100%;display:grid;
@@ -178,9 +178,12 @@ button{font-family:inherit}
 .wrow:focus-visible{box-shadow:0 0 0 2px var(--ink);border-radius:8px}
 .wrow .nm{font-size:.9375rem;font-weight:600;line-height:1.25;white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis}
-.wrow .sub{font-size:.8125rem;font-weight:500;color:var(--ash);line-height:1.3;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wrow .amt{font-size:.9375rem;font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.wrow .sub{font-size:.8125rem;font-weight:500;color:var(--ash);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wrow .amt{text-align:right;flex:none}
+.wrow .amt .q{display:block;font-size:.625rem;font-weight:500;color:var(--mute);line-height:1.2}
+.wrow .amt .n{display:block;font-size:.9375rem;font-weight:600;line-height:1.25;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
 .wrow .amt.cut{color:var(--plus)}
 .wrow .amt.maybe{color:var(--ash);font-weight:600}
 .wrow .amt.ok{color:var(--ash);font-weight:500}
@@ -193,7 +196,7 @@ button{font-family:inherit}
 .tcard .head{font-size:1.375rem;font-weight:700;letter-spacing:-.02em;line-height:1.2}
 .tcard .alt{font-size:.875rem;font-weight:500;color:var(--ash);line-height:1.5;
   padding-top:.9rem;border-top:1px solid var(--hairline)}
-.tcard .save{display:flex;align-items:baseline;gap:.4rem;font-variant-numeric:tabular-nums}
+.tcard .save{display:flex;flex-wrap:wrap;align-items:baseline;gap:.15rem .4rem;font-variant-numeric:tabular-nums}
 .tcard .save .n{font-size:1.5rem;font-weight:700;color:var(--plus);letter-spacing:-.02em}
 .tcard .save .l{font-size:.8125rem;font-weight:500;color:var(--ash)}
 
@@ -358,6 +361,7 @@ button{font-family:inherit}
 .sh{display:flex;align-items:baseline;justify-content:space-between;gap:.75rem}
 .sh h2{font-size:1.125rem;font-weight:600;letter-spacing:-.2px;line-height:1.25;min-width:0}
 .arow>*,.srow>*,.notice>*,.prio>*,.wrow>*,.evid>*,.pitem>*,.sl>*,.icard .top>*{min-width:0}
+.tcard,.icard,.solid,.notice,.hero,.panel,.wrow,.trow,.merchant,.ba{overflow-wrap:break-word}
 .arow .v,.srow .d,.evid,.pitem .t{overflow-wrap:anywhere}
 .sh .side2{font-size:.8125rem;font-weight:500;color:var(--ash);white-space:nowrap}
 
@@ -615,52 +619,52 @@ var RAMP = ["#222222","#3f3f3f","#6a6a6a","#929292","#c1c1c1","#dddddd"];
    merchant. No new permission, no ledger for the user to maintain.        */
 var WORTH = [
   { k:"cult", v:"cancel", kind:"firm", head:"₹3,750 paid, nothing used",
-    rows:[["Paid, last 90 days","₹3,750","seen in your debits"],
-          ["App opens since 30 Jun","0","usage access"],
-          ["Cult.fit day pass","₹350","published rate, Sep 2026"]],
+    rows:[["Paid, 90 days","₹3,750","your debits"],
+          ["Opens since 30 Jun","0","usage access"],
+          ["Cult.fit day pass","₹350","published Sep 2026"]],
     alt:"At zero visits, paying per use would have cost you nothing. Cancelling stops a charge you can see, so this saving is certain.",
     save:15000, act:"Cancel it" },
 
   { k:"hotstar", v:"potential", kind:"potential", head:"Not opened here since 7 June",
-    rows:[["Paid, last 90 days","₹897","seen in your debits"],
-          ["Opens on this phone","0","usage access"],
-          ["Use on TVs or laptops","not visible","Kitna cannot see this"]],
+    rows:[["Paid, 90 days","₹897","your debits"],
+          ["Opens here","0","usage access"],
+          ["TV or laptop","not visible","no access"]],
     alt:"If you watch on a TV this is money well spent. Kitna has no way to check, so only you can settle it.",
     save:3588, act:"Cancel it" },
 
   { k:"audible", v:"potential", kind:"potential", head:"No sign of it on this phone",
-    rows:[["Paid, last 90 days","₹597","seen in your debits"],
-          ["Opens on this phone","0","usage access"],
-          ["Listening on Echo or web","not visible","Kitna cannot see this"]],
+    rows:[["Paid, 90 days","₹597","your debits"],
+          ["Opens here","0","usage access"],
+          ["Echo or browser","not visible","no access"]],
     alt:"Audible runs on speakers and browsers too. Kitna cannot see your credits or your library.",
     save:2388, act:"Cancel it" },
 
   { k:"netflix", v:"potential", kind:"potential", head:"Premium, and opens are falling",
-    rows:[["Your charge","₹649 monthly","seen in your debits"],
-          ["Matches","Premium · 4 screens","published rate, Sep 2026"],
-          ["Standard plan","₹499 monthly","published rate, Sep 2026"],
+    rows:[["Your charge","₹649 monthly","your debits"],
+          ["Matches","Premium · 4 screens","published Sep 2026"],
+          ["Standard plan","₹499 monthly","published Sep 2026"],
           ["Opens last month","4, was 19","usage access"]],
     alt:"Kitna cannot see how many screens you actually use. If one is enough, Standard costs ₹150 less a month.",
     save:1800, act:"Downgrade" },
 
   { k:"prime", v:"potential", kind:"potential", head:"Six of eleven orders did not need it",
-    rows:[["Paid, last 90 days","₹375","seen in your debits"],
-          ["Orders","11","seen in your debits"],
-          ["Orders over ₹499","6","order amounts in your debits"],
-          ["Delivery below ₹499","about ₹40","published rate, Sep 2026"]],
+    rows:[["Paid, 90 days","₹375","your debits"],
+          ["Orders","11","your debits"],
+          ["Orders over ₹499","6","your debits"],
+          ["Delivery under ₹499","about ₹40","published Sep 2026"]],
     alt:"Delivery is free above ₹499 anyway, so Prime only earned its keep on 5 of your 11 orders. Roughly ₹200 of fees against ₹375 paid.",
     save:699, act:"Cancel it" },
 
   { k:"swiggy", v:"keep", kind:"firm", head:"₹13 an order",
-    rows:[["Paid, last 90 days","₹447","seen in your debits"],
-          ["Orders","34","seen in your debits"],
+    rows:[["Paid, 90 days","₹447","your debits"],
+          ["Orders","34","your debits"],
           ["Cost per order","₹13","your figures"],
-          ["Swiggy delivery fee","₹35 to ₹60","published range, Sep 2026"]],
+          ["Swiggy delivery fee","₹35 to ₹60","published Sep 2026"]],
     alt:"₹13 an order to skip a fee that usually runs ₹35 to ₹60. Comfortably ahead.",
     save:0, act:"Keep" },
 
   { k:"chatgpt", v:"keep", kind:"firm", head:"Opened almost every day",
-    rows:[["Paid, last 90 days","₹5,997","seen in your debits"],
+    rows:[["Paid, 90 days","₹5,997","your debits"],
           ["Days opened","22 of the last 30","usage access"],
           ["Cost per day used","₹91","your figures"]],
     alt:"Nothing to change here.",
@@ -1029,7 +1033,7 @@ S.home = function(){
    + 'border-radius:14px;padding:14px 16px;grid-template-columns:auto minmax(0,1fr) auto">'
    + ic("i-chart")
    + '<span><span class="nm">Worth it?</span>'
-   + '<span class="sub">'+rs(recoverable())+' a year, checked against what you actually used</span></span>'
+   + '<span class="sub">'+rs(firmSave())+' certain, '+rs(potentialSave())+' potential</span></span>'
    + ic("i-next","sm") + '</button>';
 
   if (CONF.length){
@@ -1176,7 +1180,10 @@ S.worth = function(){
         return '<button class="wrow" data-go="triage">' + tile(s2,"sm")
          + '<span><span class="nm">'+s2.n+'</span><span class="sub">'+w.head+'</span></span>'
          + '<span class="amt '+(w.save?(w.kind==="firm"?"cut":"maybe"):"ok")+'">'
-         +   (w.save ? (w.kind==="potential"?"up to ":"")+rs(w.save)+"/yr" : "keep")+'</span></button>';
+         +   (w.save
+               ? '<span class="q">'+(w.kind==="potential"?"up to":"a year")+'</span><span class="n">'+rs(w.save)+'</span>'
+               : '<span class="n">keep</span>')
+         + '</span></button>';
        }).join("") + '</div></div>';
   });
 
@@ -1193,9 +1200,9 @@ S.triage = function(){
   var pct = Math.round(TI / Q.length * 100);
 
   var acts = w.kind === "potential"
-    ? '<button class="btn" data-decide="'+w.k+':cut">'+w.act+' · up to '+rs(w.save)+' a year</button>'
+    ? '<button class="btn" data-decide="'+w.k+':cut">'+w.act+' · up to '+rs(w.save)+'/yr</button>'
       + '<button class="btn outline" data-decide="'+w.k+':kept">I use it, keep it</button>'
-    : '<button class="btn" data-decide="'+w.k+':cut">'+w.act+' · saves '+rs(w.save)+' a year</button>'
+    : '<button class="btn" data-decide="'+w.k+':cut">'+w.act+' · saves '+rs(w.save)+'/yr</button>'
       + '<button class="btn outline" data-decide="'+w.k+':kept">Keep it as it is</button>';
 
   return '<div class="screen">' + statusbar() + plainbar("", {back:"worth"})
