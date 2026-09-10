@@ -4,7 +4,9 @@ An on-device tracker for recurring debits in India. It reads the bank and UPI
 notifications already on your phone, groups the charges that repeat, and puts
 one number on the screen: what this is costing you a year.
 
-**Live prototype → https://sauravkeshari-ship-it.github.io/kitna-prototype/**
+**Live**
+- **v2 (current)** → https://sauravkeshari-ship-it.github.io/kitna-prototype/v2.html
+- v1 → https://sauravkeshari-ship-it.github.io/kitna-prototype/
 
 ## Why now
 
@@ -37,12 +39,37 @@ mandates use Plus Magenta `#92174d`, deliberate spends use Luxe Purple
 `#460479`. Airbnb Cereal VF is proprietary, so this uses Inter with -0.01em
 tracking at display sizes — the substitute Airbnb's own spec names.
 
+## v2: only claim what you can prove
+
+v1 flagged three subscriptions as idle based on app opens. That logic is wrong
+for most categories, and v2 fixes it.
+
+Every subscription is graded on whether this phone can actually observe it
+being used:
+
+| Tier | Meaning | Example |
+|---|---|---|
+| `direct` | You open the app to use the service, so app opens are a fair proxy | Cult.fit, Swiggy |
+| `multi` | Also runs on TVs, laptops, cars, speakers. Silence here proves nothing | Netflix, Audible, JioHotstar |
+| `passive` | Always-on, or has no app to open at all. There is no signal | iCloud+, Airtel, insurance, SIP |
+
+Only `direct` is ever called unused. `multi` gets a softer claim and a one-tap
+"I use this elsewhere". `passive` is never flagged, because calling iCloud+
+dead weight for not being opened would simply be wrong.
+
+The visible effect: v1 claimed Rs 20,976 of waste. v2 claims Rs 15,000 and says
+plainly that it cannot vouch for the other Rs 5,976.
+
+Usage access is also demoted to an optional, skippable, second permission with
+its limits stated on the screen. The app works without it.
+
 ## Files
 
 | File | Purpose |
 |---|---|
-| `index.html` | The prototype. Open it directly, no server needed. |
-| `artifact.html` | Same page with the document wrapper stripped, for hosts that supply their own. Generated from `index.html` — do not edit by hand. |
+| `index.html` | v1 prototype. Open it directly, no server needed. |
+| `v2.html` | v2 prototype, 23 screens. Current version. |
+| `artifact.html`, `v2-artifact.html` | Same pages with the document wrapper stripped, for hosts that supply their own. Generated — do not edit by hand. |
 
 ## Product scope
 
