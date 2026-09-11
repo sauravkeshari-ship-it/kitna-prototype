@@ -105,6 +105,21 @@ around that instead of fighting it:
 - **This charge is wrong** — five corrections from any charge. Stays on the
   phone and teaches the parser
 
+## Identity
+
+Working name **Snip**. The mark is a subscription drawn as what it is: a loop
+that repeats until somebody stops it. A ring with one arc cut free and sprung
+slightly clear of the gap.
+
+Two arcs of one circle, radius 15 on a 48 grid, stroke 6.4, round caps. Drawn
+with `currentColor` so it takes the colour of whatever it sits beside. No
+scissors, no rupee sign, no palette of its own.
+
+Full sheet, including construction, app icon, lockups, size tests down to 16px
+and misuse: `snip-identity.html`
+
+Not yet checked: trademark, Play Store name availability, domain.
+
 ## Files
 
 | File | Purpose |
