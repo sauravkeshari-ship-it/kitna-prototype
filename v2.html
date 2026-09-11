@@ -45,9 +45,10 @@ button{font-family:inherit}
 
 /* ══════════ page chrome ══════════ */
 .page{max-width:80rem;margin:0 auto;padding:2rem clamp(1rem,4vw,2.5rem) 4rem;
-  display:grid;grid-template-columns:minmax(0,19.5rem) auto;gap:clamp(1.5rem,4vw,3rem);
+  display:grid;grid-template-columns:auto minmax(0,21rem);gap:clamp(1.5rem,4vw,3rem);
   align-items:start;justify-content:center}
-@media (max-width:880px){.page{grid-template-columns:1fr}}
+@media (max-width:880px){.page{grid-template-columns:1fr}
+  .side{order:2}.device{order:1}}
 .side{display:flex;flex-direction:column;gap:1.2rem;position:sticky;top:2rem;
   max-height:calc(100vh - 4rem);overflow-y:auto;padding-right:.4rem}
 @media (max-width:880px){.side{position:static;max-height:none}}
@@ -560,18 +561,18 @@ button{font-family:inherit}
 </defs></svg>
 
 <div class="page">
+  <div class="device" id="device"></div>
   <div class="side" id="side">
     <div class="sidehd"><span class="t">Screens</span>
       <button class="cbtn" data-sideclose aria-label="Close">
         <svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
     <div class="brandline">कितना</div>
     <div>
-      <div class="t14b" style="color:var(--ash)">Version 2 · only claims what it can actually prove</div>
-      <div class="t13" style="margin-top:.35rem;line-height:1.5">Every subscription is graded on whether this phone can see it being used. Only the ones it genuinely can are called unused. The rest ask you.</div>
+      <div class="t14b" style="color:var(--ash)">Version 2 · 38 screens, 4 flows, 14 edge cases</div>
+      <div class="t13" style="margin-top:.35rem;line-height:1.5">Every screen below is reachable from the app itself. The arrows show where each one leads.</div>
     </div>
     <div id="picker" style="display:flex;flex-direction:column"></div>
   </div>
-  <div class="device" id="device"></div>
 </div>
 
 <button class="protobtn" id="protobtn" aria-label="Choose a screen">
@@ -943,6 +944,7 @@ S.scanning = function(){
         + '<span>'+l[0]+'</span><span class="ct">'+l[1]+'</span></div>'; }).join("") + '</div>'
    + '</div></div>'
    + '<div class="acts"><button class="btn" data-go="usage">See the total</button>'
+   +   '<button class="btn outline" data-go="scanempty">Nothing found</button>'
    +   '<p class="help" style="text-align:center">About 20 seconds. Nothing leaves the phone.</p></div></div>';
 };
 
@@ -1033,6 +1035,24 @@ S.home = function(){
      + '<button class="btn outline" data-go="usage">Turn on usage checking</button>';
   }
 
+  if (CONF.length){
+    var flags = [
+      ["pricechange","netflix","Price went up","₹649 to ₹799"],
+      ["duplicate","spotify","Charged twice","two accounts"],
+      ["bounce","chatgpt","Payment failed","₹118 fee"],
+      ["trial","audible","Free trial ends","3 days"],
+      ["unknown",null,"Unknown charge","₹399, three times"]
+    ];
+    body += '<div class="col g8">' + shead("Needs a look", flags.length+"")
+     + '<div>' + flags.map(function(f){
+        return '<button class="wrow" data-go="'+f[0]+'">'
+         + (f[1] ? tile(SUBS[f[1]],"sm")
+                 : '<span class="tile sm" style="color:var(--mute)">'+ic("i-alert","sm")+'</span>')
+         + '<span><span class="nm">'+f[2]+'</span><span class="sub">'+f[3]+'</span></span>'
+         + '<span class="amt">'+ic("i-next","sm")+'</span></button>';
+       }).join("") + '</div></div>';
+  }
+
   body += '<button class="wrow" data-go="worth" style="border:1px solid var(--hairline);'
    + 'border-radius:14px;padding:14px 16px;grid-template-columns:auto minmax(0,1fr) auto">'
    + ic("i-chart")
@@ -1090,6 +1110,14 @@ S.upcoming = function(){
   if (idles().length){
     body += notice({err:1, icon:"i-alert", t:"HDFC ···4412 has ₹1,240",
       d:"Three charges land before your 1 Oct salary. Two will bounce, costing ₹236."});
+    body += '<div>'
+     + '<button class="wrow" data-go="bounce">'+tile(SUBS.chatgpt,"sm")
+     +   '<span><span class="nm">ChatGPT Plus failed</span><span class="sub">₹118 return fee · retries 14 Sep</span></span>'
+     +   '<span class="amt">'+ic("i-next","sm")+'</span></button>'
+     + '<button class="wrow" data-go="capfail">'+tile(SUBS.airtel,"sm")
+     +   '<span><span class="nm">Airtel is over the limit</span><span class="sub">₹1,299 against a ₹1,000 cap</span></span>'
+     +   '<span class="amt">'+ic("i-next","sm")+'</span></button>'
+     + '</div>';
   }
   order.forEach(function(date,i){
     var g = groups[date], hot = g.some(function(s){ return s.d<=3; });
@@ -1134,7 +1162,9 @@ S.dead = function(){
   }
   if (UNK.length){
     body += '<div class="col g16">' + shead("Might be used elsewhere", UNK.length+" of them")
-     + '<div class="col g12">' + UNK.map(askcard).join("") + '</div></div>';
+     + '<div class="col g12">' + UNK.map(askcard).join("") + '</div>'
+     + '<button class="btn outline" data-go="checkin" style="margin-top:.25rem">Answer these one at a time</button>'
+     + '</div>';
   }
   if (MUT.length){
     body += '<div class="col g8">' + shead("You said these are fine", MUT.length+"")
@@ -1148,9 +1178,11 @@ S.dead = function(){
        true);
   }
 
-  body += '<div class="col g8">' + shead("Cleared", "saved ₹4,308 / yr")
-   + '<div class="arow strike"><span>'+ic("i-check")+'</span><span class="l">Zomato Gold</span>'
-   +   '<span class="v">revoked 14 Aug</span></div></div></div>';
+  body += '<div class="col g8">' + shead("Stopped on its own", "1")
+   + '<div><button class="wrow" data-go="stopped">'
+   +   '<span class="tile sm" style="color:var(--mute)">'+ic("i-idle","sm")+'</span>'
+   +   '<span><span class="nm">Zomato Gold</span><span class="sub">No charge since 14 Aug</span></span>'
+   +   '<span class="amt">'+ic("i-next","sm")+'</span></button></div></div></div>';
 
   return '<div class="screen">' + statusbar() + plainbar("Review") + '<div class="body">'+body+'</div>' + tabbar("dead") + '</div>';
 };
@@ -1248,6 +1280,167 @@ S.worthdone = function(){
    + '<button class="btn" data-go="home:full:on">Back to home</button>'
    + '<button class="btn outline" data-restart>Run it again</button>'
    + '</div></div></div>';
+};
+
+/* ══════════ edge cases ══════════ */
+function edge(o){
+  var rows = o.rows ? '<div>' + o.rows.map(function(r){
+      return '<div class="trow"><span class="l">'+r[0]+'</span>'
+       + '<span class="r2"><span class="v">'+r[1]+'</span>'
+       + (r[2] ? '<span class="src">'+r[2]+'</span>' : '') + '</span></div>';
+    }).join("") + '</div>' : '';
+  return '<div class="screen">' + statusbar() + plainbar(o.bar || "", {back: o.back || "home"})
+   + '<div class="body"><div class="pad col g16" style="padding-top:.25rem;padding-bottom:1.5rem">'
+   +   (o.who ? '<div style="display:flex;gap:.85rem;align-items:center">' + tile(SUBS[o.who])
+        + '<div><div class="t16b">'+SUBS[o.who].n+'</div>'
+        + '<div class="t14c" style="margin-top:2px">'+o.whosub+'</div></div></div>' : '')
+   +   (o.solid ? '<div class="solid '+o.solid+'"><span class="k">'+o.k+'</span>'
+        + '<div class="big"'+(o.small?' style="font-size:1.5rem;letter-spacing:-.02em"':'')+'>'+o.big+'</div>'
+        + (o.sub ? '<div class="sub">'+o.sub+'</div>' : '') + '</div>' : '')
+   +   (o.h ? '<h2 class="t28">'+o.h+'</h2>' : '')
+   +   (o.p ? '<p class="t16" style="color:var(--ash)">'+o.p+'</p>' : '')
+   +   rows
+   +   (o.note ? '<p class="t13">'+o.note+'</p>' : '')
+   + '</div></div>'
+   + '<div class="acts">'+o.acts+'</div></div>';
+}
+function act(label, go, style){ return '<button class="btn'+(style?" "+style:"")+'" data-go="'+go+'">'+label+'</button>'; }
+
+/* access turned off after setup */
+S.permdenied = function(){
+  return edge({ bar:"", back:"home", solid:"ink", k:"Since 8 September", big:"Nothing new found",
+    small:1, sub:"Notification access is off, so Kitna has not seen a single charge for three days.",
+    h:"Kitna has gone blind.",
+    p:"What you see below is the last it knew. Nothing has been deleted.",
+    rows:[["Turned off","8 Sep","in Android Settings"],
+          ["Charges missed","unknown","cannot say without access"],
+          ["Your data","still here","nothing was lost"]],
+    acts: act("Turn it back on","scanning") + act("Leave it off","home:full:on","outline") });
+};
+
+/* scan found nothing that repeats */
+S.scanempty = function(){
+  return edge({ bar:"", back:"scanning",
+    h:"Nothing repeats yet.",
+    p:"Kitna read six months and found 41 payments. None of them came twice from the same place.",
+    rows:[["Messages read","2,140","last 6 months"],
+          ["Payments found","41","your debits"],
+          ["Repeating","0","need two to count"]],
+    note:"A subscription only shows up after its second charge, so this is normal in the first month.",
+    acts: act("Add one manually","add") + act("See what Kitna is watching","settings","outline") });
+};
+
+/* merchant string Kitna cannot name */
+S.unknown = function(){
+  return edge({ bar:"", back:"home",
+    h:"What is this one?",
+    p:"₹399 has left three times from the same place, but the message does not say who it is.",
+    rows:[["On your statement","PAYU*MERCH2291","exactly as it appears"],
+          ["Amount","₹399 monthly","your debits"],
+          ["Seen","3 times","since June"]],
+    note:"Name it once and Kitna will recognise it from now on.",
+    acts: '<div class="chips" data-chipgroup="guess" style="margin-bottom:.4rem">'
+        + '<button class="chipb">Gym</button><button class="chipb">News</button>'
+        + '<button class="chipb">Software</button><button class="chipb">Something else</button></div>'
+        + act("Save","home:full:on") + act("Ignore this one","home:full:on","outline") });
+};
+
+/* price went up */
+S.pricechange = function(){
+  return edge({ bar:"", back:"home", who:"netflix", whosub:"Charged 12 Sep",
+    solid:"plus", k:"Costs more from now on", big:"+₹1,800",
+    sub:"A year. It went from ₹649 to ₹799 without asking.",
+    rows:[["Was","₹649","11 charges"],["Now","₹799","12 Sep"],["Difference","₹150 a month","your debits"]],
+    note:"Your bank allows this because the new amount is still under the limit you agreed.",
+    acts: act("Look at whether it is worth it","worth") + act("Fine, keep it","home:full:on","outline") });
+};
+
+/* same service twice */
+S.duplicate = function(){
+  return edge({ bar:"", back:"home", who:"spotify", whosub:"Charged twice every month",
+    solid:"plus", k:"Paying twice", big:"₹1,428",
+    sub:"A year. The same Spotify plan is being charged to two different accounts.",
+    rows:[["GPay auto-pay","₹119 monthly","since Mar 2025"],
+          ["ICICI ···9034","₹119 monthly","since Jan 2026"],
+          ["Both charged","21 Sep","your debits"]],
+    note:"Kitna cannot tell which one your account actually uses. Stop the newer one first.",
+    acts: act("Stop the ICICI one","revoking") + act("They are different accounts","home:full:on","outline") });
+};
+
+/* a charge failed */
+S.bounce = function(){
+  return edge({ bar:"", back:"upcoming", who:"chatgpt", whosub:"Failed 11 Sep",
+    solid:"ink", k:"It did not go through", big:"₹1,999", sub:"HDFC ···4412 had ₹340 at the time.",
+    rows:[["Needed","₹1,999","your debits"],["Available","₹340","bank message"],
+          ["Bank charged you","₹118","return fee"],["Tries again","14 Sep","bank message"]],
+    note:"Two more are due before your salary. Moving money in before 14 Sep avoids a second fee.",
+    acts: act("See what else is due","upcoming") + act("Got it","home:full:on","outline") });
+};
+
+/* free trial about to become a charge */
+S.trial = function(){
+  return edge({ bar:"", back:"upcoming", who:"audible", whosub:"Free until 14 Sep",
+    solid:"ink", k:"First charge in 3 days", big:"₹199", sub:"Your free month ends on 14 September.",
+    rows:[["Free since","14 Aug","your debits"],["First charge","14 Sep","₹199"],
+          ["Then","₹199 monthly","₹2,388 a year"]],
+    note:"Kitna spotted this because a ₹0 authorisation came through in August.",
+    acts: act("Cancel before it charges","revoking") + act("Let it start","home:full:on","outline") });
+};
+
+/* something stopped charging on its own */
+S.stopped = function(){
+  return edge({ bar:"", back:"home",
+    h:"Zomato Gold has gone quiet.",
+    p:"It charged every month until 14 August, then stopped. Kitna cannot tell whether you cancelled it or it failed.",
+    rows:[["Last charge","14 Aug","₹359"],["Expected","14 Sep","did not arrive"],
+          ["Missed","1 charge","your debits"]],
+    note:"If it failed rather than ended, the service may still be running and will try again.",
+    acts: act("I cancelled it","home:full:on") + act("I still want it","home:full:on","outline") });
+};
+
+/* what happens after you say stop */
+S.revoking = function(){
+  return edge({ bar:"", back:"detail", who:"cult", whosub:"₹1,250 monthly",
+    h:"Now do it in GPay.",
+    p:"Kitna cannot stop a payment. It can only show you where.",
+    rows:[["1","Open GPay, then Autopay",""],
+          ["2","Find Cult.fit in the list",""],
+          ["3","Tap Cancel",""]],
+    note:"Kitna will watch 12 October. If nothing leaves, it will mark this as stopped on its own.",
+    acts: act("Open GPay","revokefailed") + act("I will do it later","home:full:on","outline") });
+};
+
+/* you stopped it and it charged anyway */
+S.revokefailed = function(){
+  return edge({ bar:"", back:"home", who:"cult", whosub:"Charged again 12 Oct",
+    solid:"plus", k:"This was meant to stop", big:"₹1,250",
+    sub:"You cancelled on 9 September, but the charge came anyway.",
+    rows:[["You cancelled","9 Sep","you told Kitna"],["Charged","12 Oct","your debits"],
+          ["Instruction","still active","it went through"]],
+    note:"Cancelling inside an app does not always cancel the instruction at your bank. The bank is the one that has to stop it.",
+    acts: act("Show me how to stop it at the bank","revoking") + act("I will call the bank","home:full:on","outline") });
+};
+
+/* charge will exceed the agreed limit */
+S.capfail = function(){
+  return edge({ bar:"", back:"upcoming", who:"airtel", whosub:"Due 18 Sep",
+    solid:"ink", k:"This one will fail", big:"₹1,299", sub:"More than the ₹1,000 limit you agreed.",
+    rows:[["Bill","₹1,299","bank message"],["Limit you set","₹1,000","when you set it up"],
+          ["What happens","it will be refused","18 Sep"]],
+    note:"Raise the limit in GPay, or pay this one by hand before the 18th.",
+    acts: act("Raise the limit in GPay","revoking") + act("I will pay it myself","home:full:on","outline") });
+};
+
+/* destructive */
+S.deleteall = function(){
+  return edge({ bar:"", back:"settings",
+    h:"Delete everything?",
+    p:"Kitna will forget all of it and start from nothing.",
+    rows:[["Auto-payments","14",""],["Charges found","96",""],["Your name and number","both",""],
+          ["Kept","nothing","there is no backup"]],
+    note:"There is no backup anywhere, so this cannot be undone.",
+    acts: '<button class="btn" style="background:var(--err)" data-go="welcome">Delete everything</button>'
+        + act("Keep it","settings","outline") });
 };
 
 /* ── optional usage access ── */
@@ -1396,6 +1589,7 @@ S.settings = function(){
 
    + '<div class="col g8">' + shead("Alerts") + '<div>'
    +   srow({i:"i-bell", l:"Notifications", d:"6 of 7 on", go:"notif"})
+   +   srow({i:"i-alert", l:"Access is off", d:"Kitna stopped seeing charges on 8 Sep", go:"permdenied"})
    +   srow({i:"i-moon", l:"Quiet hours", v:"10 pm – 8 am", go:"notif"})
    + '</div></div>'
 
@@ -1408,7 +1602,7 @@ S.settings = function(){
    + '<div class="col g8">' + shead("Your data") + '<div>'
    +   srow({i:"i-lock", l:"Everything stays on this phone", d:"No account, no backup, no tracking."})
    +   srow({i:"i-export", l:"Export as CSV", d:"14 auto-payments, 96 charges", go:"settings"})
-   +   srow({i:"i-trash", l:"Delete everything", d:"Cannot be undone", danger:1, go:"settings"})
+   +   srow({i:"i-trash", l:"Delete everything", d:"Cannot be undone", danger:1, go:"deleteall"})
    + '</div></div>'
 
    + '<div class="col g8">' + shead("About") + '<div>'
@@ -1453,45 +1647,59 @@ S.notif = function(){
 
 /* ═══════════ router ═══════════ */
 var VIEWS = [
-  ["Getting in", [
-    ["welcome","01","Welcome","Wordmark plus a stack of real icons"],
-    ["ob1","02","Why now","The struck-out OTP, drawn small"],
-    ["ob2","03","How it reads","Three messages become one charge"],
-    ["ob3","04","Where it stays","Phone locked, cloud severed"],
-    ["profile","05","Name & mobile","Info Blue is the only link colour"],
-    ["otp","06","Verify","4 digits, Ink Black focus ring"],
-    ["permission","07","Permission","Now the only one Kitna requires"],
-    ["scanning","08","Scanning","Rausch progress, per payment method"],
-    ["usage","09","Usage access","NEW · optional, honest about its limits"]
+  ["Flow 1 · First run", [
+    ["welcome","01","Welcome","→ Why now"],
+    ["ob1","02","Why now","The April 2026 OTP change"],
+    ["ob2","03","How it reads","Messages become one charge"],
+    ["ob3","04","Where it stays","→ Name and mobile"],
+    ["profile","05","Name & mobile","→ Verify"],
+    ["otp","06","Verify","→ Permission"],
+    ["permission","07","Permission","The only one required · → Scanning"],
+    ["scanning","08","Scanning","→ Usage access, or Nothing found"],
+    ["usage","09","Usage access","Optional · on → Home, off → Home"]
   ]],
-  ["Home", [
-    ["home:full:on","10","Usage on","1 confirmed unused, 2 it cannot vouch for"],
-    ["home:full:off","11","Usage off","NEW · claims nothing, offers the upgrade"],
-    ["home:few:on","12","Just a few","3 auto-payments, nothing to question"],
-    ["home:none:on","13","Empty","First month, nothing detected"]
+  ["Flow 2 · Every day", [
+    ["home:full:on","10","Home","The number, then what needs a look"],
+    ["upcoming:full:on","11","Upcoming","What lands before payday"],
+    ["dead:full:on","12","Review","Three levels of certainty"],
+    ["detail","13","One charge, in full","→ Stop it"],
+    ["settings","14","Settings","→ Notifications, → Delete"],
+    ["notif","15","Notifications","Toggles and chips, all live"]
   ]],
-  ["Upcoming", [
-    ["upcoming:full:on","14","Loaded","Grouped by date, balance warning"],
-    ["upcoming:none:on","15","Empty","Nothing scheduled"]
+  ["Flow 3 · Decide", [
+    ["worth","16","Worth it?","→ Decide"],
+    ["triage","17","Decide, one at a time","5 cards → Result"],
+    ["worthdone","18","Result","Total before and after"],
+    ["checkin","19","Monthly ask","For what Kitna cannot see"],
+    ["add","20","Add manually","For what it cannot see at all"]
   ]],
-  ["Review", [
-    ["dead:full:on","16","Loaded","NEW · three tiers of certainty"],
-    ["dead:full:off","17","Usage off","NEW · everything drops to cannot tell"],
-    ["dead:few:on","18","Clean","Nothing to question"],
-    ["checkin","19","Monthly ask","NEW · one tap settles what it cannot see"]
+  ["Flow 4 · Stopping something", [
+    ["revoking","21","Do it in GPay","Kitna cannot stop a payment itself"],
+    ["revokefailed","22","It charged anyway","The bank never cancelled it"]
   ]],
-  ["Worth it · per-use", [
-    ["worth","20","Verdict list","NEW · cancel, downgrade, ask, earning its keep"],
-    ["triage","21","Decide, one at a time","NEW · the math, then two buttons"],
-    ["worthdone","22","Result","NEW · run rate before and after"]
+  ["Edge · Money went wrong", [
+    ["bounce","23","Payment failed","Not enough balance · ₹118 fee"],
+    ["capfail","24","Over the limit","₹1,299 against a ₹1,000 cap"],
+    ["pricechange","25","Price went up","₹649 to ₹799, no permission asked"],
+    ["duplicate","26","Charged twice","Same plan on two accounts"]
   ]],
-  ["Detail & input", [
-    ["detail","23","One charge, in full","Where every number came from"],
-    ["add","24","Add manually","Chips and a switch"]
+  ["Edge · Kitna is unsure", [
+    ["unknown","27","Unknown charge","PAYU*MERCH2291 · asks you to name it"],
+    ["stopped","28","Gone quiet","Cancelled, or failed? Cannot tell"],
+    ["trial","29","Free trial ending","First charge in 3 days"]
   ]],
-  ["Settings", [
-    ["settings","25","Settings","Initial avatar, amenity-style rows"],
-    ["notif","26","Notifications","Toggles and chips, all live"]
+  ["Edge · Nothing to show", [
+    ["home:none:on","30","Home, empty","First month"],
+    ["upcoming:none:on","31","Upcoming, empty","Nothing scheduled"],
+    ["dead:few:on","32","Review, clean","Nothing to question"],
+    ["home:few:on","33","Home, only a few","3 charges, no problems"],
+    ["scanempty","34","Scan found nothing","41 payments, none repeated"]
+  ]],
+  ["Edge · Access and data", [
+    ["home:full:off","35","Usage off","Claims nothing, offers the upgrade"],
+    ["dead:full:off","36","Review, usage off","Everything drops to unsure"],
+    ["permdenied","37","Access turned off","Blind since 8 Sep"],
+    ["deleteall","38","Delete everything","No backup, cannot be undone"]
   ]]
 ];
 
