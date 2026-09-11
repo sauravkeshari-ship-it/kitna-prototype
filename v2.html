@@ -439,13 +439,12 @@ button{font-family:inherit}
 .reserve .btn{width:auto;flex:none;padding:14px 28px}
 
 /* ══════════ onboarding ══════════ */
-.ob{flex:1;min-height:0;display:flex;flex-direction:column;padding:0 1.5rem}
+.ob{display:flex;flex-direction:column;padding:0 1.5rem 1rem}
 .ob .cap{padding-top:.75rem;display:flex;flex-direction:column;gap:.6rem}
 .ob .cap h2{font-size:1.75rem;font-weight:700;line-height:1.2;letter-spacing:-.01em}
 .ob .cap p{font-size:1rem;font-weight:500;line-height:1.5;color:var(--ash)}
 .ob .cap p b{color:var(--ink);font-weight:600}
-.ob .foot{margin-top:auto;padding:1.25rem 0 1.5rem;display:flex;flex-direction:column;gap:.85rem}
-.dots2{display:flex;gap:6px;justify-content:center}
+.dots2{display:flex;gap:6px;justify-content:center;padding:.15rem 0 .35rem}
 .dots2 i{width:6px;height:6px;border-radius:3px;background:var(--hairline);transition:width .25s,background .25s}
 .dots2 i.on{width:20px;background:var(--ink)}
 @keyframes fadeup{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
@@ -918,10 +917,12 @@ function ob(n, art, h, p, nextKey, ground){
    + '<div class="body"><div class="ob">'
    +   '<div class="artbox '+(ground||"cloud")+'"><div class="art">'+art+'</div></div>'
    +   '<div class="cap"><h2>'+h+'</h2><p>'+p+'</p></div>'
-   +   '<div class="foot"><div class="dots2">'+dots+'</div>'
-   +     '<button class="btn" data-go="'+nextKey+'">'+(n===2?"Set up my account":"Next")+'</button>'
-   +     '<button class="btn outline" data-go="profile">Skip</button></div>'
-   + '</div></div></div>';
+   + '</div></div>'
+   + '<div class="acts">'
+   +   '<div class="dots2">'+dots+'</div>'
+   +   '<button class="btn" data-go="'+nextKey+'">'+(n===2?"Set up my account":"Next")+'</button>'
+   +   '<button class="btn outline" data-go="profile">Skip</button>'
+   + '</div></div>';
 }
 S.ob1 = function(){ return ob(0, ART.otp, "Money leaves quietly now.",
   "Since <b>April 2026</b>, auto-payments under ₹15,000 skip the OTP. The warning you used to get never arrives.", "ob2", "rausch"); };
@@ -1262,9 +1263,10 @@ S.worth = function(){
        }).join("") + '</div></div>';
   });
 
-  body += '<button class="btn" data-go="triage">Start deciding</button></div>';
+  body += '</div>';
   return '<div class="screen">' + statusbar() + plainbar("Worth it?", {back:"home"})
-   + '<div class="body">'+body+'</div></div>';
+   + '<div class="body">'+body+'</div>'
+   + '<div class="acts"><button class="btn" data-go="triage">Start deciding</button></div></div>';
 };
 
 /* ── triage: one decision at a time ── */
@@ -1323,9 +1325,11 @@ S.worthdone = function(){
    +   '<div class="c"><div class="k">Now</div><div class="v">'+rs(after)+'</div></div></div>'
    + (rows ? '<div class="col g8">' + shead("What you decided") + '<div>'+rows+'</div></div>' : '')
    + '<p class="t13">Snip cannot cancel for you. Each one opens the app, then watches for the charge to stop.</p>'
-   + '<button class="btn" data-go="home:full:on">Back to home</button>'
-   + '<button class="btn outline" data-restart>Run it again</button>'
-   + '</div></div></div>';
+   + '</div></div>'
+   + '<div class="acts">'
+   +   '<button class="btn" data-go="home:full:on">Back to home</button>'
+   +   '<button class="btn outline" data-restart>Run it again</button>'
+   + '</div></div>';
 };
 
 /* ══════════ help and feedback ══════════ */
