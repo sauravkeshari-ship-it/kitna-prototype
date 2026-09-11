@@ -5,9 +5,9 @@
 
 <style>
 :root{
-  --canvas:#ffffff;
-  --cloud:#f7f7f7;
-  --hairline:#dddddd;
+  --canvas:#fdfbf4;
+  --cloud:#f5f2e9;
+  --hairline:#ddd8cc;
   --ink:#222222;
   --ash:#6a6a6a;
   --mute:#929292;
@@ -62,7 +62,7 @@ section{display:flex;flex-direction:column;gap:1.25rem}
 .appicon{width:104px;height:104px;border-radius:23px;display:grid;place-items:center;
   background:var(--rausch);color:#fff;box-shadow:rgba(0,0,0,.12) 0 6px 18px}
 .appicon.ink{background:var(--ink)}
-.appicon.white{background:#fff;color:var(--rausch);border:1px solid var(--hairline)}
+.appicon.white{background:var(--canvas);color:var(--rausch);border:1px solid var(--hairline)}
 .iconrow{display:flex;gap:1.1rem;flex-wrap:wrap;align-items:flex-end}
 .iconrow figure{display:flex;flex-direction:column;gap:.55rem;align-items:center}
 .iconrow figcaption{font-size:.75rem;color:var(--mute)}
@@ -137,9 +137,9 @@ footer{border-top:1px solid var(--hairline);padding-top:1.25rem;font-size:.8125r
     <div class="hd"><h2>How it is built</h2><span class="r">48 × 48 grid</span></div>
     <div class="stage" style="background:var(--canvas);border:1px solid var(--hairline)">
       <svg viewBox="0 0 48 48" width="260" height="260" style="overflow:visible">
-        <circle cx="24" cy="24" r="15" fill="none" stroke="#dddddd" stroke-width=".6"/>
-        <circle cx="24" cy="24" r="21" fill="none" stroke="#f0f0f0" stroke-width=".6"/>
-        <path d="M24 0v48M0 24h48" stroke="#f0f0f0" stroke-width=".6"/>
+        <circle cx="24" cy="24" r="15" fill="none" stroke="#ddd8cc" stroke-width=".6"/>
+        <circle cx="24" cy="24" r="21" fill="none" stroke="#efebe0" stroke-width=".6"/>
+        <path d="M24 0v48M0 24h48" stroke="#efebe0" stroke-width=".6"/>
         <path d="M24 24 L38.6 15.6" stroke="#ff385c" stroke-width=".7"/>
         <path d="M24 24 L18.87 9.9" stroke="#ff385c" stroke-width=".7"/>
         <g fill="none" stroke="#222222" stroke-width="6.4" stroke-linecap="round" opacity=".92">
@@ -256,7 +256,7 @@ footer{border-top:1px solid var(--hairline);padding-top:1.25rem;font-size:.8125r
       <svg viewBox="-10 -10 68 68" width="230" height="230">
         <rect x="-6.4" y="-6.4" width="60.8" height="60.8" fill="none" stroke="#ff385c"
               stroke-width=".7" stroke-dasharray="3 3"/>
-        <rect x="0" y="0" width="48" height="48" fill="none" stroke="#dddddd" stroke-width=".7"/>
+        <rect x="0" y="0" width="48" height="48" fill="none" stroke="#ddd8cc" stroke-width=".7"/>
         <g fill="none" stroke="#222222" stroke-width="6.4" stroke-linecap="round">
           <path d="M31.5 11.01 A15 15 0 1 1 18.87 9.9"/>
           <path d="M18.87 9.9 A15 15 0 0 1 31.5 11.01" transform="translate(1.5 -6) rotate(14 24 24)"/>
@@ -345,9 +345,9 @@ footer{border-top:1px solid var(--hairline);padding-top:1.25rem;font-size:.8125r
         <tbody>
           <tr><td><span class="sw" style="background:#ff385c"></span>Rausch</td><td><code>#ff385c</code></td><td>Primary app icon ground, launch screen, primary buttons</td></tr>
           <tr><td><span class="sw" style="background:#222222"></span>Ink Black</td><td><code>#222222</code></td><td>The mark itself on light grounds, and all type</td></tr>
-          <tr><td><span class="sw" style="background:#ffffff"></span>Canvas</td><td><code>#ffffff</code></td><td>The mark on dark and on Rausch</td></tr>
+          <tr><td><span class="sw" style="background:#fdfbf4"></span>Canvas</td><td><code>#fdfbf4</code></td><td>Page and card ground. Warmed off pure white, so the interface reads as paper</td></tr>
           <tr><td><span class="sw" style="background:#460479"></span>Luxe Purple</td><td><code>#460479</code></td><td>Alternate icon only. Never the mark's own colour</td></tr>
-          <tr><td><span class="sw" style="background:#f7f7f7"></span>Soft Cloud</td><td><code>#f7f7f7</code></td><td>Specimen and placement grounds</td></tr>
+          <tr><td><span class="sw" style="background:#f5f2e9"></span>Soft Cloud</td><td><code>#f5f2e9</code></td><td>Specimen and placement grounds</td></tr>
         </tbody>
       </table>
     </div>

@@ -12,7 +12,7 @@
 :root{
   --rausch:#ff385c; --rausch-deep:#e00b41;
   --plus:#92174d; --luxe:#460479; --info:#428bff;
-  --canvas:#ffffff; --cloud:#f7f7f7; --hairline:#dddddd;
+  --canvas:#fdfbf4; --cloud:#f5f2e9; --hairline:#ddd8cc;
   --ink:#222222; --charcoal:#3f3f3f; --ash:#6a6a6a; --mute:#929292; --stone:#c1c1c1;
   --err:#c13515;
   --cereal:"Inter","Circular",-apple-system,system-ui,"Roboto","Helvetica Neue",sans-serif;
@@ -80,7 +80,7 @@ button{font-family:inherit}
 .gh:first-of-type{border-top:0;margin-top:0}
 .pk{all:unset;cursor:pointer;display:grid;grid-template-columns:1.5rem 1fr;gap:.5rem;
   padding:.45rem .5rem;border-radius:8px;align-items:baseline}
-.pk:hover{background:#efefef}
+.pk:hover{background:#ece8dd}
 .pk:focus-visible{outline:none;box-shadow:0 0 0 2px var(--ink)}
 .pk[aria-current="true"]{background:var(--ink);color:#fff}
 .pk[aria-current="true"] em{color:#bdbdbd}
@@ -119,9 +119,9 @@ button{font-family:inherit}
 .plainbar h1{font-size:1.75rem;font-weight:700;letter-spacing:-.01em;line-height:1.25}
 .plainbar .sp{margin-left:auto;display:flex;gap:.4rem}
 
-.cbtn{all:unset;cursor:pointer;width:32px;height:32px;border-radius:50%;background:#f2f2f2;
+.cbtn{all:unset;cursor:pointer;width:32px;height:32px;border-radius:50%;background:#f1ede3;
   color:var(--ink);display:grid;place-items:center;transition:transform .12s,box-shadow .12s;flex:none}
-.cbtn:hover{background:#ebebeb}
+.cbtn:hover{background:#e8e3d7}
 .cbtn:active{transform:scale(.92);box-shadow:var(--e1)}
 .cbtn:focus-visible{box-shadow:0 0 0 2px var(--ink)}
 
@@ -223,7 +223,7 @@ button{font-family:inherit}
 .tcard .save .l{font-size:.8125rem;font-weight:500;color:var(--ash)}
 
 .prog{display:flex;align-items:center;gap:.6rem}
-.prog .track{flex:1;height:4px;background:#ebebeb;border-radius:2px;overflow:hidden}
+.prog .track{flex:1;height:4px;background:#e8e3d7;border-radius:2px;overflow:hidden}
 .prog .track i{display:block;height:100%;background:var(--ink);border-radius:2px}
 .prog .n{font-size:.6875rem;font-weight:600;color:var(--ash);font-variant-numeric:tabular-nums;white-space:nowrap}
 
@@ -242,8 +242,8 @@ button{font-family:inherit}
 .artbox.luxe{background:var(--luxe)}
 .artbox.rausch svg [stroke="#222222"], .artbox.luxe svg [stroke="#222222"],
 .artbox.rausch svg [stroke="#ff385c"], .artbox.luxe svg [stroke="#ff385c"]{stroke:#fff}
-.artbox.rausch svg [stroke="#dddddd"], .artbox.luxe svg [stroke="#dddddd"]{stroke:rgba(255,255,255,.55)}
-.artbox.rausch svg [fill="#f7f7f7"], .artbox.luxe svg [fill="#f7f7f7"]{fill:rgba(255,255,255,.3)}
+.artbox.rausch svg [stroke="#ddd8cc"], .artbox.luxe svg [stroke="#ddd8cc"]{stroke:rgba(255,255,255,.55)}
+.artbox.rausch svg [fill="#f5f2e9"], .artbox.luxe svg [fill="#f5f2e9"]{fill:rgba(255,255,255,.3)}
 .artbox.rausch svg text, .artbox.luxe svg text{fill:#fff}
 
 .solid{border-radius:20px;padding:20px;color:#fff}
@@ -297,7 +297,7 @@ button{font-family:inherit}
 .minihd .v{font-size:.8125rem;font-weight:600;font-variant-numeric:tabular-nums}
 
 .trend{display:flex;align-items:flex-end;gap:6px;height:54px}
-.trend div{flex:1;background:#ebebeb;border-radius:3px 3px 0 0;position:relative;min-height:4px}
+.trend div{flex:1;background:#e8e3d7;border-radius:3px 3px 0 0;position:relative;min-height:4px}
 .trend div.now{background:var(--ink)}
 .trend div b{position:absolute;bottom:-18px;left:0;right:0;text-align:center;
   font-size:.625rem;font-weight:500;color:var(--ash)}
@@ -406,7 +406,7 @@ button{font-family:inherit}
 .srow .r{display:flex;align-items:center;gap:.35rem;font-size:.875rem;font-weight:500;color:var(--ash);white-space:nowrap}
 .srow.danger .l{color:var(--err)}
 
-.sw{width:44px;height:26px;border-radius:13px;background:#ebebeb;position:relative;flex:none;
+.sw{width:44px;height:26px;border-radius:13px;background:#e8e3d7;position:relative;flex:none;
   cursor:pointer;transition:background .18s}
 .sw::after{content:"";position:absolute;top:2px;left:2px;width:22px;height:22px;border-radius:50%;
   background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.28);transition:transform .18s}
@@ -492,7 +492,7 @@ button{font-family:inherit}
 .pitem .ok{color:var(--ink)}
 .pitem .no{color:var(--err)}
 
-.bar{height:4px;background:#ebebeb;border-radius:2px;overflow:hidden}
+.bar{height:4px;background:#e8e3d7;border-radius:2px;overflow:hidden}
 .bar i{display:block;height:100%;background:var(--rausch);border-radius:2px;width:0;animation:gr 3.2s ease-out forwards}
 @keyframes gr{to{width:74%}}
 .sl{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:.75rem;align-items:center;padding:12px 0;
@@ -500,7 +500,7 @@ button{font-family:inherit}
 .sl:last-child{border-bottom:0}
 .sl .ct{font-size:.875rem;font-weight:500;color:var(--ash)}
 .sl.wait{color:var(--mute)}
-.spin{width:14px;height:14px;border-radius:50%;border:2px solid #ebebeb;border-top-color:var(--rausch);
+.spin{width:14px;height:14px;border-radius:50%;border:2px solid #e8e3d7;border-top-color:var(--rausch);
   animation:sp .8s linear infinite;margin-left:3px}
 @keyframes sp{to{transform:rotate(360deg)}}
 
@@ -652,7 +652,7 @@ var TRENDS = {
   few: { m:["Apr","May","Jun","Jul","Aug","Sep"], v:[768,768,893,893,893,893] },
   none:{ m:[], v:[] }
 };
-var RAMP = ["#222222","#3f3f3f","#6a6a6a","#929292","#c1c1c1","#dddddd"];
+var RAMP = ["#222222","#3f3f3f","#6a6a6a","#929292","#c1c1c1","#ddd8cc"];
 /* Per-use comparison. Every figure below is derived from transactions Snip
    already reads: the mandate debits plus the variable spend at the same
    merchant. No new permission, no ledger for the user to maintain.        */
@@ -800,38 +800,38 @@ function plainbar(title, o){
 /* ═══════════ small line art ═══════════ */
 var ART = {
   otp: '<svg viewBox="0 0 210 140" role="img" aria-label="An OTP step struck out">'
-   + '<rect x="18" y="16" width="174" height="52" rx="12" fill="none" stroke="#dddddd" stroke-width="2"/>'
-   + '<rect x="34" y="32" width="20" height="20" rx="6" fill="#f7f7f7"/>'
-   + '<path d="M68 40h96M68 54h58" stroke="#dddddd" stroke-width="4" stroke-linecap="round"/>'
+   + '<rect x="18" y="16" width="174" height="52" rx="12" fill="none" stroke="#ddd8cc" stroke-width="2"/>'
+   + '<rect x="34" y="32" width="20" height="20" rx="6" fill="#f5f2e9"/>'
+   + '<path d="M68 40h96M68 54h58" stroke="#ddd8cc" stroke-width="4" stroke-linecap="round"/>'
    + '<rect x="58" y="86" width="94" height="38" rx="8" fill="none" stroke="#222222" stroke-width="2"/>'
    + '<text x="105" y="111" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#222222">OTP</text>'
    + '<path d="M46 130 164 80" stroke="#ff385c" stroke-width="4" stroke-linecap="round"/></svg>',
 
   group: '<svg viewBox="0 0 210 140" role="img" aria-label="Three bank messages becoming one charge">'
-   + '<rect x="12" y="12" width="74" height="28" rx="8" fill="none" stroke="#dddddd" stroke-width="2"/>'
-   + '<path d="M24 26h40" stroke="#dddddd" stroke-width="3.5" stroke-linecap="round"/>'
-   + '<rect x="12" y="56" width="74" height="28" rx="8" fill="none" stroke="#dddddd" stroke-width="2"/>'
-   + '<path d="M24 70h46" stroke="#dddddd" stroke-width="3.5" stroke-linecap="round"/>'
-   + '<rect x="12" y="100" width="74" height="28" rx="8" fill="none" stroke="#dddddd" stroke-width="2"/>'
-   + '<path d="M24 114h34" stroke="#dddddd" stroke-width="3.5" stroke-linecap="round"/>'
+   + '<rect x="12" y="12" width="74" height="28" rx="8" fill="none" stroke="#ddd8cc" stroke-width="2"/>'
+   + '<path d="M24 26h40" stroke="#ddd8cc" stroke-width="3.5" stroke-linecap="round"/>'
+   + '<rect x="12" y="56" width="74" height="28" rx="8" fill="none" stroke="#ddd8cc" stroke-width="2"/>'
+   + '<path d="M24 70h46" stroke="#ddd8cc" stroke-width="3.5" stroke-linecap="round"/>'
+   + '<rect x="12" y="100" width="74" height="28" rx="8" fill="none" stroke="#ddd8cc" stroke-width="2"/>'
+   + '<path d="M24 114h34" stroke="#ddd8cc" stroke-width="3.5" stroke-linecap="round"/>'
    + '<path d="M96 70h22m0 0-7-7m7 7-7 7" stroke="#6a6a6a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'
    + '<rect x="128" y="42" width="70" height="56" rx="12" fill="none" stroke="#222222" stroke-width="2"/>'
    + '<text x="163" y="80" text-anchor="middle" font-family="Inter,sans-serif" font-size="28" font-weight="700" fill="#222222">₹</text></svg>',
 
   device: '<svg viewBox="0 0 210 140" role="img" aria-label="A locked phone with no link to the cloud">'
-   + '<path d="M74 20a16 16 0 0 1 31-5 13 13 0 0 1 20 5 13.5 13.5 0 0 1-1.6 27H79A13.5 13.5 0 0 1 74 20z" fill="none" stroke="#dddddd" stroke-width="2" stroke-dasharray="6 6"/>'
-   + '<path d="M105 52v22" stroke="#dddddd" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6"/>'
+   + '<path d="M74 20a16 16 0 0 1 31-5 13 13 0 0 1 20 5 13.5 13.5 0 0 1-1.6 27H79A13.5 13.5 0 0 1 74 20z" fill="none" stroke="#ddd8cc" stroke-width="2" stroke-dasharray="6 6"/>'
+   + '<path d="M105 52v22" stroke="#ddd8cc" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="5 6"/>'
    + '<path d="M92 70 118 56" stroke="#ff385c" stroke-width="4" stroke-linecap="round"/>'
    + '<rect x="72" y="80" width="66" height="52" rx="12" fill="none" stroke="#222222" stroke-width="2"/>'
    + '<rect x="96" y="102" width="18" height="14" rx="3" fill="none" stroke="#222222" stroke-width="2"/>'
    + '<path d="M99 102v-4a6 6 0 0 1 12 0v4" fill="none" stroke="#222222" stroke-width="2"/></svg>',
 
   cal: '<svg viewBox="0 0 210 140" role="img" aria-label="An empty calendar">'
-   + '<rect x="48" y="26" width="114" height="94" rx="12" fill="none" stroke="#dddddd" stroke-width="2"/>'
-   + '<path d="M48 54h114M76 18v16M134 18v16" stroke="#dddddd" stroke-width="2.5" stroke-linecap="round"/>'
-   + '<circle cx="80" cy="76" r="5" fill="#dddddd"/><circle cx="105" cy="76" r="5" fill="#dddddd"/>'
-   + '<circle cx="130" cy="76" r="5" fill="#dddddd"/><circle cx="80" cy="100" r="5" fill="#dddddd"/>'
-   + '<circle cx="105" cy="100" r="5" fill="#dddddd"/></svg>',
+   + '<rect x="48" y="26" width="114" height="94" rx="12" fill="none" stroke="#ddd8cc" stroke-width="2"/>'
+   + '<path d="M48 54h114M76 18v16M134 18v16" stroke="#ddd8cc" stroke-width="2.5" stroke-linecap="round"/>'
+   + '<circle cx="80" cy="76" r="5" fill="#ddd8cc"/><circle cx="105" cy="76" r="5" fill="#ddd8cc"/>'
+   + '<circle cx="130" cy="76" r="5" fill="#ddd8cc"/><circle cx="80" cy="100" r="5" fill="#ddd8cc"/>'
+   + '<circle cx="105" cy="100" r="5" fill="#ddd8cc"/></svg>',
 
   clean: '<svg viewBox="0 0 210 140" role="img" aria-label="A shield with a tick">'
    + '<path d="M105 20 148 36v33c0 26-18 42-43 47-25-5-43-21-43-47V36z" fill="none" stroke="#222222" stroke-width="2"/>'
