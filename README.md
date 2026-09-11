@@ -1,4 +1,6 @@
-# Kitna (कितना)
+# Snip
+
+*(prototype folder still named kitna-prototype, from the working name)*
 
 An on-device tracker for recurring debits in India. It reads the bank and UPI
 notifications already on your phone, groups the charges that repeat, and puts
@@ -65,14 +67,14 @@ its limits stated on the screen. The app works without it.
 
 ## Worth it? Per-use comparison
 
-Kitna already reads every debit, not only the recurring ones. v2 spends that on
+Snip already reads every debit, not only the recurring ones. v2 spends that on
 the job it already has rather than on a general expense ledger.
 
 Every figure on a card is one of three kinds, and the card says which:
 
 - **Seen in your debits** — order count, amounts, totals, cost per order
 - **Usage access** — days opened, last opened
-- **Published rate** — a small price list Kitna ships and dates
+- **Published rate** — a small price list Snip ships and dates
 
 Nothing is inferred silently. Where the answer depends on something this phone
 cannot see, the card says **potential saving** and asks you.
@@ -81,7 +83,7 @@ cannot see, the card says **potential saving** and asks you.
 |---|---|---|
 | Certain saving | Cult.fit, Rs 15,000/yr | Rs 3,750 paid in 90 days, zero opens. Stopping a charge you can see saves exactly that. |
 | Potential saving | Amazon Prime, up to Rs 699/yr | 6 of your 11 orders were over Rs 499, where delivery is free anyway |
-| Potential saving | Netflix, up to Rs 1,800/yr | Rs 649 matches Premium. Kitna cannot see how many screens you use. |
+| Potential saving | Netflix, up to Rs 1,800/yr | Rs 649 matches Premium. Snip cannot see how many screens you use. |
 | Earning its keep | Swiggy One | Rs 13 an order against a fee that usually runs Rs 35 to Rs 60 |
 
 Rs 15,000 is certain. Rs 8,475 is possible and openly marked as resting on your
@@ -100,14 +102,14 @@ around that instead of fighting it:
 - **Report a problem** — category, description, optional diagnostic
 - **What gets sent** — the full payload shown in plain text before it goes. No
   amounts, no bank names, no account numbers, no merchants, no message text.
-  Only the *shape* of a message Kitna failed to read, labelled `AXIS-01 x5`
+  Only the *shape* of a message Snip failed to read, labelled `AXIS-01 x5`
 - **Suggest something** — one sentence, plus how much it matters
 - **This charge is wrong** — five corrections from any charge. Stays on the
   phone and teaches the parser
 
 ## Identity
 
-Working name **Snip**. The mark is a subscription drawn as what it is: a loop
+The mark is a subscription drawn as what it is: a loop
 that repeats until somebody stops it. A ring with one arc cut free and sprung
 slightly clear of the gap.
 
@@ -131,7 +133,7 @@ Not yet checked: trademark, Play Store name availability, domain.
 ## Product scope
 
 Deliberately narrow. No bank linking, no Account Aggregator, no concierge
-cancellation, no budgeting. Kitna cannot move money and never asks for a UPI
+cancellation, no budgeting. Snip cannot move money and never asks for a UPI
 PIN — it deep-links you to your own UPI app to revoke a mandate.
 
 All figures in the prototype are designed sample data.

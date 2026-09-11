@@ -1,7 +1,7 @@
-<title>Kitna v2</title>
+<title>Snip</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
 /* ══════════ Airbnb design system tokens ══════════ */
 :root{
@@ -11,7 +11,6 @@
   --ink:#222222; --charcoal:#3f3f3f; --ash:#6a6a6a; --mute:#929292; --stone:#c1c1c1;
   --err:#c13515;
   --cereal:"Inter","Circular",-apple-system,system-ui,"Roboto","Helvetica Neue",sans-serif;
-  --dev:"Noto Sans Devanagari",var(--cereal);
   --e2:rgba(0,0,0,.02) 0 0 0 1px, rgba(0,0,0,.04) 0 2px 6px 0, rgba(0,0,0,.1) 0 4px 8px 0;
   --e1:rgba(0,0,0,.08) 0 4px 12px;
 }
@@ -49,9 +48,9 @@ button{font-family:inherit}
 @media (max-width:880px){.side{position:static;max-height:none}}
 .side::-webkit-scrollbar{width:4px}
 .side::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
-.brandline{font-family:var(--dev);font-weight:700;font-size:2rem;line-height:1.35;
-  background:linear-gradient(90deg,#ff385c 0%,#e00b41 50%,#92174d 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;width:max-content}
+.brand{display:flex;align-items:center;gap:.55rem;color:var(--ink);width:max-content}
+.brand .mk{flex:none}
+.brand .wm{font-weight:700;letter-spacing:-.045em;line-height:1}
 .gh{padding:.9rem .5rem .35rem;border-top:1px solid var(--hairline);margin-top:.3rem;
   font-size:.75rem;font-weight:600;color:var(--ash)}
 .gh:first-of-type{border-top:0;margin-top:0}
@@ -91,9 +90,7 @@ button{font-family:inherit}
 /* ── bars ── */
 .topnav{flex:none;padding:.2rem 1.5rem .75rem;background:var(--canvas)}
 .topnav.bordered{border-bottom:1px solid var(--hairline)}
-.brandbar{font-family:var(--dev);font-weight:700;font-size:1.5rem;line-height:1.5;
-  background:linear-gradient(90deg,#ff385c 0%,#e00b41 50%,#92174d 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent;width:max-content}
+
 .plainbar{flex:none;display:flex;align-items:center;gap:.5rem;padding:.1rem 1.5rem .8rem}
 .plainbar h1{font-size:1.75rem;font-weight:700;letter-spacing:-.01em;line-height:1.25}
 .plainbar .sp{margin-left:auto;display:flex;gap:.4rem}
@@ -532,12 +529,18 @@ button{font-family:inherit}
     max-height:none;overflow-y:auto;padding:calc(1rem + env(safe-area-inset-top)) 1.1rem 3rem;
     top:0;border-radius:0}
   .side.open{display:flex}
-  .side .brandline{font-size:1.5rem}
+  .side .brand .wm{font-size:1.375rem}
   .pk{padding:.6rem .5rem}
 }
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="snip" viewBox="0 0 48 48">
+  <g fill="none" stroke="currentColor" stroke-width="6.4" stroke-linecap="round">
+    <path d="M31.5 11.01 A15 15 0 1 1 18.87 9.9"/>
+    <path d="M18.87 9.9 A15 15 0 0 1 31.5 11.01" transform="translate(1.5 -6) rotate(14 24 24)"/>
+  </g>
+</symbol>
 <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.6 12 3.2l9 7.4V20a1 1 0 0 1-1 1h-4.6v-6.2H9.6V21H4a1 1 0 0 1-1-1z"/></symbol>
 <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10.5h18"/></symbol>
 <symbol id="i-idle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></symbol>
@@ -569,9 +572,9 @@ button{font-family:inherit}
     <div class="sidehd"><span class="t">Screens</span>
       <button class="cbtn" data-sideclose aria-label="Close">
         <svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
-    <div class="brandline">कितना</div>
+    <div class="brand"><svg class="mk" width="30" height="30" aria-hidden="true"><use href="#snip"/></svg><span class="wm" style="font-size:1.75rem">Snip</span></div>
     <div>
-      <div class="t14b" style="color:var(--ash)">Version 2 · 39 screens, 5 flows, 14 edge cases</div>
+      <div class="t14b" style="color:var(--ash)">Version 2 · 39 screens · 5 flows · 14 edge cases</div>
       <div class="t13" style="margin-top:.35rem;line-height:1.5">Every screen below is reachable from the app itself. The arrows show where each one leads.</div>
     </div>
     <div id="picker" style="display:flex;flex-direction:column"></div>
@@ -625,7 +628,7 @@ var TRENDS = {
   none:{ m:[], v:[] }
 };
 var RAMP = ["#222222","#3f3f3f","#6a6a6a","#929292","#c1c1c1","#dddddd"];
-/* Per-use comparison. Every figure below is derived from transactions Kitna
+/* Per-use comparison. Every figure below is derived from transactions Snip
    already reads: the mandate debits plus the variable spend at the same
    merchant. No new permission, no ledger for the user to maintain.        */
 var WORTH = [
@@ -640,14 +643,14 @@ var WORTH = [
     rows:[["Paid, 90 days","₹897","your debits"],
           ["Opens here","0","usage access"],
           ["TV or laptop","not visible","no access"]],
-    alt:"Fine if you watch on a TV. Kitna cannot see that.",
+    alt:"Fine if you watch on a TV. Snip cannot see that.",
     save:3588, act:"Cancel it" },
 
   { k:"audible", v:"potential", kind:"potential", head:"No sign of it here",
     rows:[["Paid, 90 days","₹597","your debits"],
           ["Opens here","0","usage access"],
           ["Echo or browser","not visible","no access"]],
-    alt:"Audible works on speakers and browsers too. Kitna cannot see those.",
+    alt:"Audible works on speakers and browsers too. Snip cannot see those.",
     save:2388, act:"Cancel it" },
 
   { k:"netflix", v:"potential", kind:"potential", head:"Premium, but barely opened",
@@ -707,7 +710,7 @@ function sumA(l){ return l.reduce(function(t,s){ return t+s.a; },0); }
 function perYear(s){ return s.cy==="yearly" ? s.a : s.a*12; }
 function cyc(s){ return s.cy==="yearly" ? "per year" : "per month"; }
 
-/* ── what Kitna is allowed to claim about each subscription ──
+/* ── what Snip is allowed to claim about each subscription ──
    confirmed : this phone can see it, and has not seen it in 60+ days
    unknown   : used on other devices too, so silence here proves nothing
    unseeable : passive or app-less. never flag these, there is no signal   */
@@ -857,7 +860,7 @@ S.welcome = function(){
   var peek = ["netflix","spotify","chatgpt","cult","prime"].map(function(k){ return tile(SUBS[k],"sm"); }).join("");
   return '<div class="screen">' + statusbar()
    + '<div class="body"><div class="pad col g24" style="padding-top:2.5rem">'
-   +   '<div class="brandline" style="font-size:2.75rem">कितना</div>'
+   +   '<div class="brand"><svg class="mk" width="52" height="52" aria-hidden="true"><use href="#snip"/></svg><span class="wm" style="font-size:2.75rem">Snip</span></div>'
    +   '<div class="col g12">'
    +     '<div class="t28">Find out what leaves your account without asking you first.</div>'
    +     '<div class="t16" style="color:var(--ash)">It reads the bank messages already on your phone and adds up what repeats.</div>'
@@ -883,9 +886,9 @@ function ob(n, art, h, p, nextKey, ground){
 S.ob1 = function(){ return ob(0, ART.otp, "Money leaves quietly now.",
   "Since <b>April 2026</b>, auto-payments under ₹15,000 skip the OTP. The warning you used to get never arrives.", "ob2", "rausch"); };
 S.ob2 = function(){ return ob(1, ART.group, "Your bank already tells you.",
-  "Every charge still lands as a message. Kitna reads those, spots the ones that repeat, and works out the <b>yearly</b> cost.", "ob3", "cloud"); };
+  "Every charge still lands as a message. Snip reads those, spots the ones that repeat, and works out the <b>yearly</b> cost.", "ob3", "cloud"); };
 S.ob3 = function(){ return ob(2, ART.device, "Nothing leaves this phone.",
-  "No account, no upload. Kitna cannot move money and never asks for your PIN. <b>Delete the app and it is gone.</b>", "profile", "luxe"); };
+  "No account, no upload. Snip cannot move money and never asks for your PIN. <b>Delete the app and it is gone.</b>", "profile", "luxe"); };
 
 S.profile = function(){
   return '<div class="screen">' + statusbar() + plainbar("", {back:"ob3"})
@@ -930,7 +933,7 @@ S.permission = function(){
    + '</div></div>'
    + '<div class="acts"><button class="btn" data-go="scanning">Turn on notification access</button>'
    +   '<button class="btn outline" data-go="home:none">I will add them myself</button>'
-   +   '<p class="help" style="text-align:center">The only one Kitna needs. One more is offered later, and it is optional.</p></div></div>';
+   +   '<p class="help" style="text-align:center">The only one Snip needs. One more is offered later, and it is optional.</p></div></div>';
 };
 
 S.scanning = function(){
@@ -969,14 +972,14 @@ S.home = function(){
   var CONF = byVerdict("confirmed"), UNK = byVerdict("unknown"), A = leaks().filter(function(s){
     var v = verdict(s); return v === "used" || v === "unseeable" || v === "muted";
   });
-  var head = '<div class="topnav bordered"><div class="brandbar">कितना</div></div>';
+  var head = '<div class="topnav bordered"><div class="brand"><svg class="mk" width="26" height="26" aria-hidden="true"><use href="#snip"/></svg><span class="wm" style="font-size:1.375rem">Snip</span></div></div>';
 
   if (!L.length){
     return '<div class="screen">' + statusbar() + head
      + '<div class="body"><div class="pad col g16" style="padding-top:1.5rem">'
      + '<div class="empty"><div class="art mini">'+ART.cal+'</div>'
      +   '<h2>Nothing repeating yet</h2>'
-     +   '<p>Kitna waits to see the same charge <b>twice</b> before counting it. Usually about a month.</p>'
+     +   '<p>Snip waits to see the same charge <b>twice</b> before counting it. Usually about a month.</p>'
      + '</div>'
      + notice({icon:"i-check", t:"Notification access is on", d:"Watching 3 accounts since 9 Sep"})
      + '<button class="btn outline" data-go="add">Add one manually</button>'
@@ -1034,7 +1037,7 @@ S.home = function(){
 
   if (!USAGE){
     body += notice({icon:"i-info", t:"Usage checking is off",
-      d:"Kitna can see what you pay for, not what you use. Turn on usage access to spot the dead ones."})
+      d:"Snip can see what you pay for, not what you use. Turn on usage access to spot the dead ones."})
      + '<button class="btn outline" data-go="usage">Turn on usage checking</button>';
   }
 
@@ -1146,7 +1149,7 @@ S.dead = function(){
      + '<div class="body"><div class="pad"><div class="empty">'
      + '<div class="art mini">'+ART.clean+'</div>'
      + '<h2>Nothing to question</h2>'
-     + '<p>Everything Kitna can check has been used recently, and everything it cannot check is marked as such.</p>'
+     + '<p>Everything Snip can check has been used recently, and everything it cannot check is marked as such.</p>'
      + '<p class="t13">Checked this morning, 9:12 am.</p>'
      + '</div></div></div>' + tabbar("dead") + '</div>';
   }
@@ -1176,7 +1179,7 @@ S.dead = function(){
   }
   if (SEEN.length){
     body += disc("Nothing to check", SEEN.length+" of them",
-       '<p class="t13" style="padding-bottom:.75rem">Storage, phone bills and insurance have no app to open. Kitna never calls these unused.</p>'
+       '<p class="t13" style="padding-bottom:.75rem">Storage, phone bills and insurance have no app to open. Snip never calls these unused.</p>'
      + '<div>' + SEEN.map(function(s){ return crow(s, {sub:evidenceLabel(s), tier:"luxe"}); }).join("") + '</div>',
        true);
   }
@@ -1279,7 +1282,7 @@ S.worthdone = function(){
    +   '<span>'+ic("i-next","sm")+'</span>'
    +   '<div class="c"><div class="k">Now</div><div class="v">'+rs(after)+'</div></div></div>'
    + (rows ? '<div class="col g8">' + shead("What you decided") + '<div>'+rows+'</div></div>' : '')
-   + '<p class="t13">Kitna cannot cancel for you. Each one opens the app, then watches for the charge to stop.</p>'
+   + '<p class="t13">Snip cannot cancel for you. Each one opens the app, then watches for the charge to stop.</p>'
    + '<button class="btn" data-go="home:full:on">Back to home</button>'
    + '<button class="btn outline" data-restart>Run it again</button>'
    + '</div></div></div>';
@@ -1287,7 +1290,7 @@ S.worthdone = function(){
 
 /* ══════════ help and feedback ══════════ */
 var HELP = [
-  ["missed","Kitna missed a charge",
+  ["missed","Snip missed a charge",
    "It only sees what your bank sends as a notification. If your bank does not message you for that account, or notifications for that app are switched off, the charge is invisible.",
    [["Check the bank is on the list","Settings, then Payment methods"],
     ["Check that bank still messages you","Some banks stop after a while"],
@@ -1295,9 +1298,9 @@ var HELP = [
   ["named","It named something wrong",
    "Bank messages often carry a payment gateway code rather than the shop. PAYU*MERCH2291 is a real example.",
    [["Open the charge","Then tap Something wrong with this"],
-    ["Give it the right name","Kitna remembers it from then on"]]],
+    ["Give it the right name","Snip remembers it from then on"]]],
   ["unused","It says unused but I use it",
-   "Kitna only sees this phone. Anything you watch on a TV, listen to on a speaker or use in a browser is invisible to it.",
+   "Snip only sees this phone. Anything you watch on a TV, listen to on a speaker or use in a browser is invisible to it.",
    [["Tap I use this elsewhere","It stops asking about that one"],
     ["Or turn usage checking off","Settings, then Notifications"]]],
   ["again","Something I stopped charged again",
@@ -1308,7 +1311,7 @@ var HELP = [
    "Either notification access is off, or nothing has charged twice yet.",
    [["Check access is on","Settings will warn you if not"],
     ["Wait for a second charge","Nothing counts until it repeats"]]],
-  ["cancel","Can Kitna cancel things for me?",
+  ["cancel","Can Snip cancel things for me?",
    "No. It has no permission to move or stop money, and it will never ask for one.",
    [["It shows you where","Then watches whether the charge stops"]]]
 ];
@@ -1374,7 +1377,7 @@ S.reportdata = function(){
    + '<div class="body"><div class="pad col g16" style="padding-top:.25rem;padding-bottom:1.5rem">'
    + '<h2 class="t28">This is the whole thing.</h2>'
    + '<p class="t16" style="color:var(--ash)">Nothing else leaves the phone. You can read it before it goes.</p>'
-   + '<div class="payload">Kitna 0.4.1\nAndroid 15 · Pixel 8a\n\n'
+   + '<div class="payload">Snip 0.4.1\nAndroid 15 · Pixel 8a\n\n'
    +   'Accounts watched: <b>3</b>\nCharges found: <b>96</b>\nRepeating: <b>14</b>\n'
    +   'Parser misses last 30d: <b>7</b>\nUsage access: <b>on</b>\n\n'
    +   'Unparsed message shapes:\n  <b>AXIS-01</b> ×5\n  <b>AXIS-04</b> ×2\n\n'
@@ -1384,7 +1387,7 @@ S.reportdata = function(){
                   ["Your name or number","never"],["Message text","only its shape"]]
         .map(function(r){ return '<div class="trow"><span class="l">'+r[0]+'</span>'
           + '<span class="r2"><span class="v">'+r[1]+'</span></span></div>'; }).join("") + '</div></div>'
-   + '<p class="t13">AXIS-01 is a label for the layout of a message Kitna could not read. It carries no words from the message itself.</p>'
+   + '<p class="t13">AXIS-01 is a label for the layout of a message Snip could not read. It carries no words from the message itself.</p>'
    + '</div></div>'
    + '<div class="acts">' + act("Looks fine, go back","report") + '</div></div>';
 };
@@ -1413,7 +1416,7 @@ S.sent = function(){
    +   '<h2 class="t28">Sent.</h2>'
    +   '<p class="t16" style="color:var(--ash);max-width:19rem">If you left an email you will hear back. If not, we still read it.</p>'
    + '</div></div></div>'
-   + '<div class="acts">' + act("Back to Kitna","home:full:on") + '</div></div>';
+   + '<div class="acts">' + act("Back to Snip","home:full:on") + '</div></div>';
 };
 
 S.reportcharge = function(){
@@ -1432,7 +1435,7 @@ S.reportcharge = function(){
        .map(function(r){ return '<button class="srow" data-go="sent"><span>'+ic("i-close")+'</span>'
         + '<span><span class="l">'+r[0]+'</span><span class="d">'+r[1]+'</span></span>'
         + '<span class="r">'+ic("i-next","sm")+'</span></button>'; }).join("") + '</div>'
-   + '<p class="t13">Corrections stay on this phone and teach Kitna to read your messages better. Nothing is uploaded.</p>'
+   + '<p class="t13">Corrections stay on this phone and teach Snip to read your messages better. Nothing is uploaded.</p>'
    + '</div></div></div>';
 };
 
@@ -1463,8 +1466,8 @@ function act(label, go, style){ return '<button class="btn'+(style?" "+style:"")
 /* access turned off after setup */
 S.permdenied = function(){
   return edge({ bar:"", back:"home", solid:"ink", k:"Since 8 September", big:"Nothing new found",
-    small:1, sub:"Notification access is off, so Kitna has not seen a single charge for three days.",
-    h:"Kitna has gone blind.",
+    small:1, sub:"Notification access is off, so Snip has not seen a single charge for three days.",
+    h:"Snip has gone blind.",
     p:"What you see below is the last it knew. Nothing has been deleted.",
     rows:[["Turned off","8 Sep","in Android Settings"],
           ["Charges missed","unknown","cannot say without access"],
@@ -1476,15 +1479,15 @@ S.permdenied = function(){
 S.scanempty = function(){
   return edge({ bar:"", back:"scanning",
     h:"Nothing repeats yet.",
-    p:"Kitna read six months and found 41 payments. None of them came twice from the same place.",
+    p:"Snip read six months and found 41 payments. None of them came twice from the same place.",
     rows:[["Messages read","2,140","last 6 months"],
           ["Payments found","41","your debits"],
           ["Repeating","0","need two to count"]],
     note:"A subscription only shows up after its second charge, so this is normal in the first month.",
-    acts: act("Add one manually","add") + act("See what Kitna is watching","settings","outline") });
+    acts: act("Add one manually","add") + act("See what Snip is watching","settings","outline") });
 };
 
-/* merchant string Kitna cannot name */
+/* merchant string Snip cannot name */
 S.unknown = function(){
   return edge({ bar:"", back:"home",
     h:"What is this one?",
@@ -1492,7 +1495,7 @@ S.unknown = function(){
     rows:[["On your statement","PAYU*MERCH2291","exactly as it appears"],
           ["Amount","₹399 monthly","your debits"],
           ["Seen","3 times","since June"]],
-    note:"Name it once and Kitna will recognise it from now on.",
+    note:"Name it once and Snip will recognise it from now on.",
     acts: '<div class="chips" data-chipgroup="guess" style="margin-bottom:.4rem">'
         + '<button class="chipb">Gym</button><button class="chipb">News</button>'
         + '<button class="chipb">Software</button><button class="chipb">Something else</button></div>'
@@ -1517,7 +1520,7 @@ S.duplicate = function(){
     rows:[["GPay auto-pay","₹119 monthly","since Mar 2025"],
           ["ICICI ···9034","₹119 monthly","since Jan 2026"],
           ["Both charged","21 Sep","your debits"]],
-    note:"Kitna cannot tell which one your account actually uses. Stop the newer one first.",
+    note:"Snip cannot tell which one your account actually uses. Stop the newer one first.",
     acts: act("Stop the ICICI one","revoking") + act("They are different accounts","home:full:on","outline") });
 };
 
@@ -1537,7 +1540,7 @@ S.trial = function(){
     solid:"ink", k:"First charge in 3 days", big:"₹199", sub:"Your free month ends on 14 September.",
     rows:[["Free since","14 Aug","your debits"],["First charge","14 Sep","₹199"],
           ["Then","₹199 monthly","₹2,388 a year"]],
-    note:"Kitna spotted this because a ₹0 authorisation came through in August.",
+    note:"Snip spotted this because a ₹0 authorisation came through in August.",
     acts: act("Cancel before it charges","revoking") + act("Let it start","home:full:on","outline") });
 };
 
@@ -1545,7 +1548,7 @@ S.trial = function(){
 S.stopped = function(){
   return edge({ bar:"", back:"home",
     h:"Zomato Gold has gone quiet.",
-    p:"It charged every month until 14 August, then stopped. Kitna cannot tell whether you cancelled it or it failed.",
+    p:"It charged every month until 14 August, then stopped. Snip cannot tell whether you cancelled it or it failed.",
     rows:[["Last charge","14 Aug","₹359"],["Expected","14 Sep","did not arrive"],
           ["Missed","1 charge","your debits"]],
     note:"If it failed rather than ended, the service may still be running and will try again.",
@@ -1556,11 +1559,11 @@ S.stopped = function(){
 S.revoking = function(){
   return edge({ bar:"", back:"detail", who:"cult", whosub:"₹1,250 monthly",
     h:"Now do it in GPay.",
-    p:"Kitna cannot stop a payment. It can only show you where.",
+    p:"Snip cannot stop a payment. It can only show you where.",
     rows:[["1","Open GPay, then Autopay",""],
           ["2","Find Cult.fit in the list",""],
           ["3","Tap Cancel",""]],
-    note:"Kitna will watch 12 October. If nothing leaves, it will mark this as stopped on its own.",
+    note:"Snip will watch 12 October. If nothing leaves, it will mark this as stopped on its own.",
     acts: act("Open GPay","revokefailed") + act("I will do it later","home:full:on","outline") });
 };
 
@@ -1569,7 +1572,7 @@ S.revokefailed = function(){
   return edge({ bar:"", back:"home", who:"cult", whosub:"Charged again 12 Oct",
     solid:"plus", k:"This was meant to stop", big:"₹1,250",
     sub:"You cancelled on 9 September, but the charge came anyway.",
-    rows:[["You cancelled","9 Sep","you told Kitna"],["Charged","12 Oct","your debits"],
+    rows:[["You cancelled","9 Sep","you told Snip"],["Charged","12 Oct","your debits"],
           ["Instruction","still active","it went through"]],
     note:"Cancelling inside an app does not always cancel the instruction at your bank. The bank is the one that has to stop it.",
     acts: act("Show me how to stop it at the bank","revoking") + act("I will call the bank","home:full:on","outline") });
@@ -1589,7 +1592,7 @@ S.capfail = function(){
 S.deleteall = function(){
   return edge({ bar:"", back:"settings",
     h:"Delete everything?",
-    p:"Kitna will forget all of it and start from nothing.",
+    p:"Snip will forget all of it and start from nothing.",
     rows:[["Auto-payments","14",""],["Charges found","96",""],["Your name and number","both",""],
           ["Kept","nothing","there is no backup"]],
     note:"There is no backup anywhere, so this cannot be undone.",
@@ -1602,14 +1605,14 @@ S.usage = function(){
   var rows = [
     ["i-check","Reads the last-used date only","Not what you did, not for how long."],
     ["i-check","Works for apps you open to use","A gym you check into, food you order."],
-    ["i-close","Cannot see TVs or speakers","Netflix on the TV is invisible. Kitna will say so."],
+    ["i-close","Cannot see TVs or speakers","Netflix on the TV is invisible. Snip will say so."],
     ["i-close","Never leaves the phone","Same as everything else here."]
   ];
   return '<div class="screen">' + statusbar() + plainbar("", {back:"home"})
    + '<div class="body"><div class="pad col g16" style="padding-top:.25rem">'
    + '<span class="optional">Optional</span>'
-   + '<h2 class="t28">Want Kitna to spot the ones you stopped using?</h2>'
-   + '<p class="t16" style="color:var(--ash)">Everything works without it. Turn it on and Kitna can also spot what you stopped opening.</p>'
+   + '<h2 class="t28">Want Snip to spot the ones you stopped using?</h2>'
+   + '<p class="t16" style="color:var(--ash)">Everything works without it. Turn it on and Snip can also spot what you stopped opening.</p>'
    + '<div class="plist">' + rows.map(function(r){
        return '<div class="pitem"><span class="'+(r[0]==="i-check"?"ok":"no")+'">'+ic(r[0])+'</span>'
         + '<span class="t"><b>'+r[1]+'</b><br><span style="color:var(--ash);font-size:.875rem">'+r[2]+'</span></span></div>';
@@ -1636,7 +1639,7 @@ S.checkin = function(){
    + '<div class="acts">'
    +   '<button class="btn outline" data-mute="JioHotstar Super" data-go="dead">Yes, I watch it elsewhere</button>'
    +   '<button class="btn" data-go="detail">No, cancel it</button>'
-   +   '<p class="help" style="text-align:center">Asked once a month, only for what Kitna cannot see.</p></div></div>';
+   +   '<p class="help" style="text-align:center">Asked once a month, only for what Snip cannot see.</p></div></div>';
 };
 
 /* ── detail ── */
@@ -1659,12 +1662,12 @@ S.detail = function(){
    + '</div>'
    + '<hr class="hr">'
 
-   + '<div class="col g16">' + shead("How Kitna knows")
+   + '<div class="col g16">' + shead("How Snip knows")
    +   '<div>'
    +   [[1,"Bank messages","11 since Nov 2024"],
       [1,"App opens","You open this one to use it"],
       [0,"Booking messages","None since 30 June"],
-      [0,"The gym\u2019s own records","Kitna has no access"]]
+      [0,"The gym\u2019s own records","Snip has no access"]]
      .map(function(r){ return '<div class="evid"><span class="'+(r[0]?"y":"n")+'">'+ic(r[0]?"i-check":"i-close","sm")+'</span>'
       + '<span><b style="color:var(--ink);font-weight:600">'+r[1]+'</b><br>'+r[2]+'</span></div>'; }).join("")
    +   '</div>'
@@ -1676,7 +1679,7 @@ S.detail = function(){
    +     '<div style="height:64%"><b>Apr</b></div><div style="height:44%"><b>May</b></div><div style="height:22%"><b>Jun</b></div>'
    +     '<div class="nil" style="height:4%"><b>Jul</b></div><div class="nil" style="height:4%"><b>Aug</b></div><div class="nil" style="height:4%"><b>Sep</b></div>'
    +   '</div><div style="height:1rem"></div>'
-   +   '<p class="t13">From app opens on this phone. Kitna cannot see the gym’s own records.</p>'
+   +   '<p class="t13">From app opens on this phone. Snip cannot see the gym’s own records.</p>'
    + '</div>'
 
    + '<div class="col g8">' + shead("The details") + '<div>'
@@ -1708,7 +1711,7 @@ S.detail = function(){
 S.add = function(){
   return '<div class="screen">' + statusbar() + plainbar("Add a charge", {back:"home"})
    + '<div class="body"><div class="form">'
-   + '<p class="lede">For anything Kitna cannot see. A gym you pay in cash, a plan on someone else’s card.</p>'
+   + '<p class="lede">For anything Snip cannot see. A gym you pay in cash, a plan on someone else’s card.</p>'
    + '<div class="field"><span class="flabel">What is it</span><div class="inp">'+ic("i-card","sm")+'<input type="text" placeholder="Gym, newspaper, help at home…"></div></div>'
    + '<div class="field"><span class="flabel">Amount</span><div class="inp"><span class="pre">₹</span><input type="text" placeholder="1,250" inputmode="numeric"></div></div>'
    + '<div class="field"><span class="flabel">How often</span><div class="chips" data-chipgroup="cycle">'
@@ -1744,11 +1747,11 @@ S.settings = function(){
 
    + '<div class="col g8">' + shead("Alerts") + '<div>'
    +   srow({i:"i-bell", l:"Notifications", d:"6 of 7 on", go:"notif"})
-   +   srow({i:"i-alert", l:"Access is off", d:"Kitna stopped seeing charges on 8 Sep", go:"permdenied"})
+   +   srow({i:"i-alert", l:"Access is off", d:"Snip stopped seeing charges on 8 Sep", go:"permdenied"})
    +   srow({i:"i-moon", l:"Quiet hours", v:"10 pm – 8 am", go:"notif"})
    + '</div></div>'
 
-   + '<div class="col g8">' + shead("What Kitna watches") + '<div>'
+   + '<div class="col g8">' + shead("What Snip watches") + '<div>'
    +   srow({i:"i-card", l:"Payment methods", d:"HDFC, GPay, ICICI", v:"3", go:"settings"})
    +   srow({i:"i-plus", l:"Manually added", v:"0", go:"add"})
    +   srow({i:"i-chart", l:"Count investments", d:"Off. SIP and insurance stay out of the total.", sw:0})
@@ -1766,7 +1769,7 @@ S.settings = function(){
    +   srow({i:"i-chart", l:"Suggest something", go:"feedback"})
    +   srow({i:"i-shield", l:"Privacy policy", go:"ob3"})
    + '</div>'
-   + '<p class="t12" style="padding-top:.75rem">Kitna 0.4.1 · No sign-in · Nothing is sent anywhere</p></div>'
+   + '<p class="t12" style="padding-top:.75rem">Snip 0.4.1 · No sign-in · Nothing is sent anywhere</p></div>'
    + '</div></div>' + tabbar("settings") + '</div>';
 };
 
@@ -1798,7 +1801,7 @@ S.notif = function(){
    +   t("Monthly total","First of the month",0) + '</div></div>'
    + '<div class="col g8">' + shead("Quiet hours") + '<div>'
    +   t("Hold overnight","10 pm to 8 am. Charge warnings still come through.",1) + '</div>'
-   + '<p class="t12" style="padding-top:.75rem">Kitna never sends ads. There is nothing to sell you.</p></div>'
+   + '<p class="t12" style="padding-top:.75rem">Snip never sends ads. There is nothing to sell you.</p></div>'
    + '</div></div></div>';
 };
 
@@ -1827,11 +1830,11 @@ var VIEWS = [
     ["worth","16","Worth it?","→ Decide"],
     ["triage","17","Decide, one at a time","5 cards → Result"],
     ["worthdone","18","Result","Total before and after"],
-    ["checkin","19","Monthly ask","For what Kitna cannot see"],
+    ["checkin","19","Monthly ask","For what Snip cannot see"],
     ["add","20","Add manually","For what it cannot see at all"]
   ]],
   ["Flow 4 · Stopping something", [
-    ["revoking","21","Do it in GPay","Kitna cannot stop a payment itself"],
+    ["revoking","21","Do it in GPay","Snip cannot stop a payment itself"],
     ["revokefailed","22","It charged anyway","The bank never cancelled it"]
   ]],
   ["Edge · Money went wrong", [
@@ -1840,7 +1843,7 @@ var VIEWS = [
     ["pricechange","25","Price went up","₹649 to ₹799, no permission asked"],
     ["duplicate","26","Charged twice","Same plan on two accounts"]
   ]],
-  ["Edge · Kitna is unsure", [
+  ["Edge · Snip is unsure", [
     ["unknown","27","Unknown charge","PAYU*MERCH2291 · asks you to name it"],
     ["stopped","28","Gone quiet","Cancelled, or failed? Cannot tell"],
     ["trial","29","Free trial ending","First charge in 3 days"]
