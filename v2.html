@@ -60,7 +60,7 @@ button{font-family:inherit}
 
 /* ── splash ── */
 .splash{flex:1;min-height:0;background:var(--rausch);display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:1.6rem;padding:2rem;position:relative}
+  align-items:center;justify-content:center;gap:1.4rem;padding:2rem;position:relative}
 .splash .foot{position:absolute;left:0;right:0;bottom:calc(2rem + env(safe-area-inset-bottom));
   text-align:center;font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.78)}
 .splashmark{animation:pop .5s cubic-bezier(.2,.9,.3,1) both}
@@ -68,6 +68,10 @@ button{font-family:inherit}
   animation:cut .95s cubic-bezier(.2,.9,.25,1) both}
 .splash .wm2{font-size:2.5rem;font-weight:700;letter-spacing:-.05em;line-height:1;color:#fff;
   animation:pop .5s cubic-bezier(.2,.9,.3,1) .22s both}
+.splash .tag2{font-size:1rem;font-weight:500;line-height:1.4;color:rgba(255,255,255,.92);
+  text-align:center;max-width:17rem;margin-top:-.6rem;
+  animation:rise .55s cubic-bezier(.2,.9,.3,1) .5s both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @keyframes pop{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
 @keyframes cut{0%,34%{transform:translate(0px,0px) rotate(0deg)}
   100%{transform:translate(1.5px,-6px) rotate(14deg)}}
@@ -887,6 +891,7 @@ S.splash = function(){
    +       '<path class="piece" d="M18.87 9.9 A15 15 0 0 1 31.5 11.01"/>'
    +     '</g></svg>'
    +   '<div class="wm2">Snip</div>'
+   +   '<div class="tag2">Find all your subscriptions in one place.</div>'
    +   '<div class="foot">Everything stays on this phone</div>'
    + '</div></div>';
 };
@@ -1843,7 +1848,7 @@ S.notif = function(){
 /* ═══════════ router ═══════════ */
 var VIEWS = [
   ["Flow 1 · First run", [
-    ["splash","01","Splash","The cut happens · → Welcome"],
+    ["splash","01","Splash","The cut happens · 2s, then Welcome"],
     ["welcome","02","Welcome","→ Why now"],
     ["ob1","03","Why now","The April 2026 OTP change"],
     ["ob2","04","How it reads","Messages become one charge"],
@@ -1923,13 +1928,18 @@ VIEWS.forEach(function(g){
   });
 });
 
+var SPLASH_T = null;
 function show(target){
   var p = String(target).split(":"), key = p[0];
+  if (SPLASH_T){ clearTimeout(SPLASH_T); SPLASH_T = null; }
   if (p[1]) STATE = p[1];
   if (p[2]) USAGE = (p[2] === "on");
   if (key === "worth"){ TI = 0; DECIDED = {}; }
   if (!S[key]) return;
   device.innerHTML = S[key]();
+  if (key === "splash" && typeof setTimeout === "function"){
+    SPLASH_T = setTimeout(function(){ SPLASH_T = null; show("welcome"); }, 2000);
+  }
   picker.querySelectorAll(".pk").forEach(function(b){
     var k = b.dataset.go.split(":");
     b.setAttribute("aria-current", (k[0]===key && (!k[1] || k[1]===STATE)) ? "true" : "false");
