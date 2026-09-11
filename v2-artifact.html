@@ -48,9 +48,24 @@ button{font-family:inherit}
 @media (max-width:880px){.side{position:static;max-height:none}}
 .side::-webkit-scrollbar{width:4px}
 .side::-webkit-scrollbar-thumb{background:var(--hairline);border-radius:2px}
-.brand{display:flex;align-items:center;gap:.55rem;color:var(--ink);width:max-content}
-.brand .mk{flex:none}
-.brand .wm{font-weight:700;letter-spacing:-.045em;line-height:1}
+.brand{display:flex;align-items:center;gap:.55rem;width:max-content}
+.brand .mk{flex:none;color:var(--rausch)}
+.brand .wm{font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--ink)}
+.brand.inv .mk,.brand.inv .wm{color:#fff}
+
+/* ── splash ── */
+.splash{flex:1;min-height:0;background:var(--rausch);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:1.6rem;padding:2rem;position:relative}
+.splash .foot{position:absolute;left:0;right:0;bottom:calc(2rem + env(safe-area-inset-bottom));
+  text-align:center;font-size:.8125rem;font-weight:500;color:rgba(255,255,255,.78)}
+.splashmark{animation:pop .5s cubic-bezier(.2,.9,.3,1) both}
+.splashmark .piece{transform-box:view-box;transform-origin:24px 24px;
+  animation:cut .95s cubic-bezier(.2,.9,.25,1) both}
+.splash .wm2{font-size:2.5rem;font-weight:700;letter-spacing:-.05em;line-height:1;color:#fff;
+  animation:pop .5s cubic-bezier(.2,.9,.3,1) .22s both}
+@keyframes pop{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:none}}
+@keyframes cut{0%,34%{transform:translate(0px,0px) rotate(0deg)}
+  100%{transform:translate(1.5px,-6px) rotate(14deg)}}
 .gh{padding:.9rem .5rem .35rem;border-top:1px solid var(--hairline);margin-top:.3rem;
   font-size:.75rem;font-weight:600;color:var(--ash)}
 .gh:first-of-type{border-top:0;margin-top:0}
@@ -574,7 +589,7 @@ button{font-family:inherit}
         <svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
     <div class="brand"><svg class="mk" width="30" height="30" aria-hidden="true"><use href="#snip"/></svg><span class="wm" style="font-size:1.75rem">Snip</span></div>
     <div>
-      <div class="t14b" style="color:var(--ash)">Version 2 · 39 screens · 5 flows · 14 edge cases</div>
+      <div class="t14b" style="color:var(--ash)">Version 2 · 40 screens · 5 flows · 14 edge cases</div>
       <div class="t13" style="margin-top:.35rem;line-height:1.5">Every screen below is reachable from the app itself. The arrows show where each one leads.</div>
     </div>
     <div id="picker" style="display:flex;flex-direction:column"></div>
@@ -855,6 +870,19 @@ function notice(o){
 
 /* ═══════════ screens ═══════════ */
 var S = {};
+
+S.splash = function(){
+  return '<div class="screen" data-go="welcome" style="cursor:pointer">' + statusbar()
+   + '<div class="splash">'
+   +   '<svg class="splashmark" viewBox="0 0 48 48" width="96" height="96" aria-label="Snip">'
+   +     '<g fill="none" stroke="#ffffff" stroke-width="6.4" stroke-linecap="round">'
+   +       '<path d="M31.5 11.01 A15 15 0 1 1 18.87 9.9"/>'
+   +       '<path class="piece" d="M18.87 9.9 A15 15 0 0 1 31.5 11.01"/>'
+   +     '</g></svg>'
+   +   '<div class="wm2">Snip</div>'
+   +   '<div class="foot">Everything stays on this phone</div>'
+   + '</div></div>';
+};
 
 S.welcome = function(){
   var peek = ["netflix","spotify","chatgpt","cult","prime"].map(function(k){ return tile(SUBS[k],"sm"); }).join("");
@@ -1808,15 +1836,16 @@ S.notif = function(){
 /* ═══════════ router ═══════════ */
 var VIEWS = [
   ["Flow 1 · First run", [
-    ["welcome","01","Welcome","→ Why now"],
-    ["ob1","02","Why now","The April 2026 OTP change"],
-    ["ob2","03","How it reads","Messages become one charge"],
-    ["ob3","04","Where it stays","→ Name and mobile"],
-    ["profile","05","Name & mobile","→ Verify"],
-    ["otp","06","Verify","→ Permission"],
-    ["permission","07","Permission","The only one required · → Scanning"],
-    ["scanning","08","Scanning","→ Usage access, or Nothing found"],
-    ["usage","09","Usage access","Optional · on → Home, off → Home"]
+    ["splash","01","Splash","The cut happens · → Welcome"],
+    ["welcome","02","Welcome","→ Why now"],
+    ["ob1","03","Why now","The April 2026 OTP change"],
+    ["ob2","04","How it reads","Messages become one charge"],
+    ["ob3","05","Where it stays","→ Name and mobile"],
+    ["profile","06","Name & mobile","→ Verify"],
+    ["otp","07","Verify","→ Permission"],
+    ["permission","08","Permission","The only one required · → Scanning"],
+    ["scanning","09","Scanning","→ Usage access, or Nothing found"],
+    ["usage","10","Usage access","Optional · on → Home, off → Home"]
   ]],
   ["Flow 2 · Every day", [
     ["home:full:on","10","Home","The number, then what needs a look"],
