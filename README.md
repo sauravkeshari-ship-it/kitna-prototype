@@ -1,5 +1,8 @@
 # Snip
 
+**Find all your subscriptions in one place.**
+And see what each one costs you a year, not a month.
+
 *(prototype folder still named kitna-prototype, from the working name)*
 
 An on-device tracker for recurring debits in India. It reads the bank and UPI
