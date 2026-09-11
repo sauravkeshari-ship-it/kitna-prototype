@@ -445,6 +445,16 @@ button{font-family:inherit}
 .flabel{font-size:.75rem;font-weight:500;color:var(--ash)}
 .help{font-size:.75rem;font-weight:400;color:var(--ash);line-height:1.45}
 
+.ta{border:1px solid var(--hairline);border-radius:8px;padding:14px 16px;background:var(--canvas);
+  min-height:110px;font-size:1rem;font-weight:500;line-height:1.5;color:var(--ink)}
+.ta:focus-within{border-color:var(--ink);box-shadow:0 0 0 2px var(--ink)}
+.ta .ph{color:var(--mute)}
+.payload{background:var(--cloud);border-radius:14px;padding:16px;font-family:ui-monospace,
+  "SF Mono",Menlo,monospace;font-size:.75rem;line-height:1.7;color:var(--ink-2);
+  overflow-wrap:anywhere;white-space:pre-wrap}
+.payload b{color:var(--ink);font-weight:600}
+.payload s{color:var(--mute);text-decoration:none}
+
 .otp{display:flex;gap:.65rem;justify-content:center;padding:.3rem 0}
 .otp i{width:58px;height:66px;border-radius:8px;border:1px solid var(--hairline);display:grid;
   place-items:center;font-size:1.5rem;font-weight:600;font-style:normal}
@@ -561,7 +571,7 @@ button{font-family:inherit}
         <svg class="ic" aria-hidden="true"><use href="#i-close"/></svg></button></div>
     <div class="brandline">कितना</div>
     <div>
-      <div class="t14b" style="color:var(--ash)">Version 2 · 38 screens, 4 flows, 14 edge cases</div>
+      <div class="t14b" style="color:var(--ash)">Version 2 · 39 screens, 5 flows, 14 edge cases</div>
       <div class="t13" style="margin-top:.35rem;line-height:1.5">Every screen below is reachable from the app itself. The arrows show where each one leads.</div>
     </div>
     <div id="picker" style="display:flex;flex-direction:column"></div>
@@ -1275,6 +1285,157 @@ S.worthdone = function(){
    + '</div></div></div>';
 };
 
+/* ══════════ help and feedback ══════════ */
+var HELP = [
+  ["missed","Kitna missed a charge",
+   "It only sees what your bank sends as a notification. If your bank does not message you for that account, or notifications for that app are switched off, the charge is invisible.",
+   [["Check the bank is on the list","Settings, then Payment methods"],
+    ["Check that bank still messages you","Some banks stop after a while"],
+    ["Add it by hand","Settings, then Add one manually"]]],
+  ["named","It named something wrong",
+   "Bank messages often carry a payment gateway code rather than the shop. PAYU*MERCH2291 is a real example.",
+   [["Open the charge","Then tap Something wrong with this"],
+    ["Give it the right name","Kitna remembers it from then on"]]],
+  ["unused","It says unused but I use it",
+   "Kitna only sees this phone. Anything you watch on a TV, listen to on a speaker or use in a browser is invisible to it.",
+   [["Tap I use this elsewhere","It stops asking about that one"],
+    ["Or turn usage checking off","Settings, then Notifications"]]],
+  ["again","Something I stopped charged again",
+   "Cancelling inside an app does not always cancel the instruction at your bank. Only the bank can stop it.",
+   [["Cancel it in your UPI app too","Autopay, then find it, then Cancel"],
+    ["If it still charges, call the bank","They can remove the instruction"]]],
+  ["nothing","Nothing is being found at all",
+   "Either notification access is off, or nothing has charged twice yet.",
+   [["Check access is on","Settings will warn you if not"],
+    ["Wait for a second charge","Nothing counts until it repeats"]]],
+  ["cancel","Can Kitna cancel things for me?",
+   "No. It has no permission to move or stop money, and it will never ask for one.",
+   [["It shows you where","Then watches whether the charge stops"]]]
+];
+var HELPI = 0;
+
+S.help = function(){
+  return '<div class="screen">' + statusbar() + plainbar("Help", {back:"settings"})
+   + '<div class="body"><div class="pad col g24" style="padding-bottom:1.5rem">'
+   + '<div>' + HELP.map(function(h,i){
+       return '<button class="srow" data-help="'+i+'"><span>'+ic("i-info")+'</span>'
+        + '<span><span class="l">'+h[1]+'</span></span>'
+        + '<span class="r">'+ic("i-next","sm")+'</span></button>';
+     }).join("") + '</div>'
+   + '<div class="col g8">' + shead("Still stuck")
+   +   '<div><button class="srow" data-go="report"><span>'+ic("i-alert")+'</span>'
+   +     '<span><span class="l">Report a problem</span><span class="d">Tell us what went wrong</span></span>'
+   +     '<span class="r">'+ic("i-next","sm")+'</span></button>'
+   +   '<button class="srow" data-go="feedback"><span>'+ic("i-chart")+'</span>'
+   +     '<span><span class="l">Suggest something</span><span class="d">What would make this better</span></span>'
+   +     '<span class="r">'+ic("i-next","sm")+'</span></button></div></div>'
+   + '<p class="t13">There is no account, so there is nobody to look you up. Everything here is answered on the phone.</p>'
+   + '</div></div></div>';
+};
+
+S.helpitem = function(){
+  var h = HELP[HELPI];
+  return '<div class="screen">' + statusbar() + plainbar("", {back:"help"})
+   + '<div class="body"><div class="pad col g16" style="padding-top:.25rem;padding-bottom:1.5rem">'
+   + '<h2 class="t28">'+h[1]+'</h2>'
+   + '<p class="t16" style="color:var(--ash)">'+h[2]+'</p>'
+   + '<div class="col g8">' + shead("What to do")
+   +   '<div>' + h[3].map(function(r){
+        return '<div class="trow"><span class="l">'+r[0]+'</span>'
+         + '<span class="r2"><span class="src">'+r[1]+'</span></span></div>'; }).join("") + '</div></div>'
+   + '</div></div>'
+   + '<div class="acts">' + act("This did not help","report","outline") + '</div></div>';
+};
+
+S.report = function(){
+  return '<div class="screen">' + statusbar() + plainbar("Report a problem", {back:"help"})
+   + '<div class="body"><div class="form">'
+   + '<div class="field"><span class="flabel">What went wrong</span>'
+   +   '<div class="chips" data-chipgroup="problem">'
+   +     '<button class="chipb on">Missed a charge</button><button class="chipb">Wrong name</button>'
+   +     '<button class="chipb">Wrong amount</button><button class="chipb">Crashed</button>'
+   +     '<button class="chipb">Something else</button></div></div>'
+   + '<div class="field"><span class="flabel">What happened</span>'
+   +   '<div class="ta"><span class="ph">My HDFC card charges do show up, but the ones on my Axis account never appear.</span></div></div>'
+   + '<div class="srow flat" style="border-top:1px solid var(--hairline)"><span>'+ic("i-lock")+'</span>'
+   +   '<span><span class="l">Attach a report</span>'
+   +   '<span class="d">Helps us find the cause. No amounts, no bank names, no numbers.</span></span>'
+   +   '<span class="sw on" data-sw></span></div>'
+   + '<button class="linkbtn" data-go="reportdata">See exactly what gets sent</button>'
+   + '<div class="field"><span class="flabel">Email, if you want a reply</span>'
+   +   '<div class="inp">'+ic("i-user","sm")+'<input type="email" placeholder="Optional"></div></div>'
+   + '</div></div>'
+   + '<div class="acts">' + act("Send","sent")
+   +   '<p class="help" style="text-align:center">Opens your mail app. Nothing is sent in the background.</p></div></div>';
+};
+
+S.reportdata = function(){
+  return '<div class="screen">' + statusbar() + plainbar("", {back:"report"})
+   + '<div class="body"><div class="pad col g16" style="padding-top:.25rem;padding-bottom:1.5rem">'
+   + '<h2 class="t28">This is the whole thing.</h2>'
+   + '<p class="t16" style="color:var(--ash)">Nothing else leaves the phone. You can read it before it goes.</p>'
+   + '<div class="payload">Kitna 0.4.1\nAndroid 15 · Pixel 8a\n\n'
+   +   'Accounts watched: <b>3</b>\nCharges found: <b>96</b>\nRepeating: <b>14</b>\n'
+   +   'Parser misses last 30d: <b>7</b>\nUsage access: <b>on</b>\n\n'
+   +   'Unparsed message shapes:\n  <b>AXIS-01</b> ×5\n  <b>AXIS-04</b> ×2\n\n'
+   +   'Removed: <s>bank names, account numbers, amounts, merchants, your name, your number</s></div>'
+   + '<div class="col g8">' + shead("What is not in it")
+   +   '<div>' + [["Amounts","never"],["Merchant names","never"],["Account numbers","never"],
+                  ["Your name or number","never"],["Message text","only its shape"]]
+        .map(function(r){ return '<div class="trow"><span class="l">'+r[0]+'</span>'
+          + '<span class="r2"><span class="v">'+r[1]+'</span></span></div>'; }).join("") + '</div></div>'
+   + '<p class="t13">AXIS-01 is a label for the layout of a message Kitna could not read. It carries no words from the message itself.</p>'
+   + '</div></div>'
+   + '<div class="acts">' + act("Looks fine, go back","report") + '</div></div>';
+};
+
+S.feedback = function(){
+  return '<div class="screen">' + statusbar() + plainbar("Suggest something", {back:"help"})
+   + '<div class="body"><div class="form">'
+   + '<p class="lede">Short is fine. One sentence is fine.</p>'
+   + '<div class="field"><span class="flabel">What would make this better</span>'
+   +   '<div class="ta"><span class="ph">Let me set a different warning time for the big yearly ones.</span></div></div>'
+   + '<div class="field"><span class="flabel">How much does this matter to you</span>'
+   +   '<div class="chips" data-chipgroup="weight">'
+   +     '<button class="chipb">Nice to have</button><button class="chipb on">Would use it</button>'
+   +     '<button class="chipb">Stopping me</button></div></div>'
+   + '<div class="field"><span class="flabel">Email, if you want a reply</span>'
+   +   '<div class="inp">'+ic("i-user","sm")+'<input type="email" placeholder="Optional"></div></div>'
+   + '</div></div>'
+   + '<div class="acts">' + act("Send","sent") + '</div></div>';
+};
+
+S.sent = function(){
+  return '<div class="screen">' + statusbar() + plainbar("", {back:"help"})
+   + '<div class="body"><div class="pad col g16" style="padding-top:2rem">'
+   + '<div class="art mini">'+ART.clean+'</div>'
+   + '<div class="col g8" style="text-align:center;align-items:center">'
+   +   '<h2 class="t28">Sent.</h2>'
+   +   '<p class="t16" style="color:var(--ash);max-width:19rem">If you left an email you will hear back. If not, we still read it.</p>'
+   + '</div></div></div>'
+   + '<div class="acts">' + act("Back to Kitna","home:full:on") + '</div></div>';
+};
+
+S.reportcharge = function(){
+  var s2 = SUBS.cult;
+  return '<div class="screen">' + statusbar() + plainbar("", {back:"detail"})
+   + '<div class="body"><div class="pad col g16" style="padding-top:.25rem">'
+   + '<div style="display:flex;gap:.85rem;align-items:center">' + tile(s2)
+   +   '<div><div class="t16b">'+s2.n+'</div>'
+   +   '<div class="t14c" style="margin-top:2px">₹1,250 monthly</div></div></div>'
+   + '<h2 class="t28">What is wrong with it?</h2>'
+   + '<div>' + [["Wrong name","It is not Cult.fit"],
+                ["Not a subscription","This does not repeat"],
+                ["Wrong amount","The figure is off"],
+                ["Already cancelled","I stopped this a while ago"],
+                ["Wrong dates","The next charge is not right"]]
+       .map(function(r){ return '<button class="srow" data-go="sent"><span>'+ic("i-close")+'</span>'
+        + '<span><span class="l">'+r[0]+'</span><span class="d">'+r[1]+'</span></span>'
+        + '<span class="r">'+ic("i-next","sm")+'</span></button>'; }).join("") + '</div>'
+   + '<p class="t13">Corrections stay on this phone and teach Kitna to read your messages better. Nothing is uploaded.</p>'
+   + '</div></div></div>';
+};
+
 /* ══════════ edge cases ══════════ */
 function edge(o){
   var rows = o.rows ? '<div>' + o.rows.map(function(r){
@@ -1530,6 +1691,7 @@ S.detail = function(){
    +   '<div class="ht">On 3 of your auto-payments</div></div>'
    +   '<button class="btn outline pill sm" data-go="detail">See all 3</button></div>'
 
+   + '<button class="linkbtn" data-go="reportcharge" style="align-self:flex-start">Something wrong with this?</button>'
    + '<div class="ttk">'
    +   '<div class="b"><h3>If you stop it</h3><p>Your bank stops the auto-payment. It does not cancel the membership, do that in their app too.</p></div>'
    +   '<div class="b"><h3>If you do nothing</h3><p>₹1,250 leaves on 12 Sep. No OTP, no message.</p></div>'
@@ -1599,7 +1761,9 @@ S.settings = function(){
    + '</div></div>'
 
    + '<div class="col g8">' + shead("About") + '<div>'
-   +   srow({i:"i-info", l:"How detection works", go:"ob2"})
+   +   srow({i:"i-info", l:"Help", d:"Six common problems, answered", go:"help"})
+   +   srow({i:"i-alert", l:"Report a problem", go:"report"})
+   +   srow({i:"i-chart", l:"Suggest something", go:"feedback"})
    +   srow({i:"i-shield", l:"Privacy policy", go:"ob3"})
    + '</div>'
    + '<p class="t12" style="padding-top:.75rem">Kitna 0.4.1 · No sign-in · Nothing is sent anywhere</p></div>'
@@ -1688,6 +1852,15 @@ var VIEWS = [
     ["home:few:on","33","Home, only a few","3 charges, no problems"],
     ["scanempty","34","Scan found nothing","41 payments, none repeated"]
   ]],
+  ["Flow 5 · Help and feedback", [
+    ["help","39","Help","Six problems · → an answer, or Report"],
+    ["helpitem","40","One answer","What to do, step by step"],
+    ["report","41","Report a problem","→ What gets sent"],
+    ["reportdata","42","What gets sent","The whole payload, readable"],
+    ["feedback","43","Suggest something","One sentence is fine"],
+    ["reportcharge","44","This charge is wrong","From any charge · five corrections"],
+    ["sent","45","Sent","→ Home"]
+  ]],
   ["Edge · Access and data", [
     ["home:full:off","35","Usage off","Claims nothing, offers the upgrade"],
     ["dead:full:off","36","Review, usage off","Everything drops to unsure"],
@@ -1736,6 +1909,8 @@ document.addEventListener("click", function(e){
   if (dh){ dh.parentNode.classList.toggle("open"); return; }
   var mb = e.target.closest("[data-more]");
   if (mb){ mb.parentNode.classList.toggle("open"); return; }
+  var hp = e.target.closest("[data-help]");
+  if (hp){ HELPI = parseInt(hp.getAttribute("data-help"), 10) || 0; show("helpitem"); return; }
   var dec = e.target.closest("[data-decide]");
   if (dec){
     var parts = dec.getAttribute("data-decide").split(":");

@@ -91,6 +91,20 @@ This deliberately is **not** an expense tracker. No categories, no budgets, no
 monthly report, nothing for the user to maintain. That category is a commodity
 in India and it is what killed Walnut.
 
+## Help and feedback
+
+There is no account and no server, so support cannot look you up. It is built
+around that instead of fighting it:
+
+- **Help** — six common problems answered on the phone, each with steps
+- **Report a problem** — category, description, optional diagnostic
+- **What gets sent** — the full payload shown in plain text before it goes. No
+  amounts, no bank names, no account numbers, no merchants, no message text.
+  Only the *shape* of a message Kitna failed to read, labelled `AXIS-01 x5`
+- **Suggest something** — one sentence, plus how much it matters
+- **This charge is wrong** — five corrections from any charge. Stays on the
+  phone and teaches the parser
+
 ## Files
 
 | File | Purpose |
